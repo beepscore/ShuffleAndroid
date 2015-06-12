@@ -105,13 +105,15 @@ public class Shuffler {
         }
 
         // TODO: Fix me
-        /*
         // LinkedList implements Queue, Dequeue
         // http://stackoverflow.com/questions/12179887/android-queue-vs-stack
         Queue<Node> queue = new LinkedList<Node>();
 
         Node root = new Node("", null, null);
         queue.add(root);
+
+        int indexString0 = 0;
+        int indexString1 = 0;
 
         while (!queue.isEmpty()) {
 
@@ -123,15 +125,25 @@ public class Shuffler {
                 return true;
             }
 
-            if (node.left != null) {
+            if ((string0 != null)
+                    && (indexString0 < string0.length())) {
+                String string0AtIndex = StringUtils.getSubstringLengthOneAtIndex(string0, indexString0);
+                String nodeLeftValue = node.value.concat(string0AtIndex);
+                node.left = new Node(nodeLeftValue, null, null);
                 queue.add(node.left);
+                indexString0 += 1;
             }
 
-            if (node.right != null) {
+            if ((string1 != null)
+                    && (indexString1 < string1.length())) {
+                String string1AtIndex = StringUtils.getSubstringLengthOneAtIndex(string1, indexString1);
+                String nodeRightValue = node.value.concat(string1AtIndex);
+                node.right = new Node(nodeRightValue, null, null);
                 queue.add(node.right);
+                indexString1 += 1;
             }
+
         }
-        */
 
         // didn't find a solution
         return false;
