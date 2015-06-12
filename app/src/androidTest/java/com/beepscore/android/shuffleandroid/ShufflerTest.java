@@ -102,4 +102,14 @@ public class ShufflerTest extends TestCase {
         assertFalse(shuffler.isValidShuffle("abc", null, "ab"));
     }
 
+    public void testIsValidShuffleSourceStringEmpty() {
+        Shuffler shuffler = new Shuffler();
+
+        assertTrue(shuffler.isValidShuffle("", "", ""));
+        assertTrue(shuffler.isValidShuffle("abc", "abc", ""));
+        assertTrue(shuffler.isValidShuffle("abc", "", "abc"));
+
+        assertFalse(shuffler.isValidShuffle("abc", "", ""));
+    }
+
 }

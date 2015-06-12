@@ -94,12 +94,12 @@ public class Shuffler {
             return false;
         }
 
-        if ((string0 == null)
+        if (((string0 == null) || (string0.length() == 0))
                 && shuffledString.equals(string1)) {
             return true;
         }
 
-        if ((string1 == null)
+        if (((string1 == null) || (string1.length() == 0))
                 && shuffledString.equals(string0)) {
             return true;
         }
