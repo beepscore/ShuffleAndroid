@@ -88,6 +88,14 @@ public class Shuffler {
             }
         }
 
+        if ("".equals(shuffledString)) {
+            if (("".equals(string0)) && ("".equals(string1))) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         if ((shuffledString != null)
                 && (string0 == null)
                 && (string1 == null)) {
