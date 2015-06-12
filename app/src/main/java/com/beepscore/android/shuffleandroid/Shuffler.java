@@ -76,4 +76,64 @@ public class Shuffler {
         // didn't find a match
         return null;
     }
+
+    public boolean isValidShuffle(String shuffledString,
+                                  String string0, String string1) {
+
+        if (shuffledString == null) {
+            if ((string0 == null) && (string1 == null)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        if ((shuffledString != null)
+                && (string0 == null)
+                && (string1 == null)) {
+            return false;
+        }
+
+        if ((string0 == null)
+                && shuffledString.equals(string1)) {
+            return true;
+        }
+
+        if ((string1 == null)
+                && shuffledString.equals(string0)) {
+            return true;
+        }
+
+        // TODO: Fix me
+        /*
+        // LinkedList implements Queue, Dequeue
+        // http://stackoverflow.com/questions/12179887/android-queue-vs-stack
+        Queue<Node> queue = new LinkedList<Node>();
+
+        Node root = new Node("", null, null);
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+
+            Node node = queue.remove();
+            //Log.d("breadth-first", node.toString());
+            this.nodesSearched.add(node.value);
+
+            if (isNodeValueEqualToValue(node, shuffledString)) {
+                return true;
+            }
+
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
+        */
+
+        // didn't find a solution
+        return false;
+    }
 }

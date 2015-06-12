@@ -77,4 +77,26 @@ public class ShufflerTest extends TestCase {
         expected.add("H");
         assertEquals(expected, shuffler.nodesSearched);
     }
+
+    public void testIsValidShuffleShuffledStringNull() {
+        Shuffler shuffler = new Shuffler();
+
+        assertTrue(shuffler.isValidShuffle(null, null, null));
+
+        assertFalse(shuffler.isValidShuffle(null, "a", null));
+        assertFalse(shuffler.isValidShuffle(null, null, "b"));
+        assertFalse(shuffler.isValidShuffle(null, "a", "b"));
+    }
+
+    public void testIsValidShuffleSourceStringNull() {
+        Shuffler shuffler = new Shuffler();
+
+        assertTrue(shuffler.isValidShuffle("abc", "abc", null));
+        assertTrue(shuffler.isValidShuffle("abc", null, "abc"));
+
+        assertFalse(shuffler.isValidShuffle("abc", null, null));
+        assertFalse(shuffler.isValidShuffle("ab", null, "abc"));
+        assertFalse(shuffler.isValidShuffle("abc", null, "ab"));
+    }
+
 }
