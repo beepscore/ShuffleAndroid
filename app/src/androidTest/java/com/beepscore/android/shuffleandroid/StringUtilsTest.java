@@ -23,4 +23,13 @@ public class StringUtilsTest extends TestCase {
         assertEquals("d", StringUtils.getSubstringLengthOneAtIndex("ab d", 3));
     }
 
+    public void testStringByRemovingLettersInString() {
+        assertEquals("b", StringUtils.stringByRemovingLettersInString("ab", "a"));
+        assertEquals("a", StringUtils.stringByRemovingLettersInString("ab", "b"));
+        assertEquals("", StringUtils.stringByRemovingLettersInString("ab", "ab"));
+
+        // can't remove "b" from "a"
+        assertEquals("a", StringUtils.stringByRemovingLettersInString("a", "b"));
+    }
+
 }
