@@ -153,9 +153,8 @@ public class ShufflerTest extends TestCase {
 
         assertFalse(shuffler.isValidShuffle("abc", null, "ab"));
 
-        //TODO: Fix method so these test cases pass
-        //assertFalse(shuffler.isValidShuffle("a", null, "ab"));
-        //assertFalse(shuffler.isValidShuffle("ab", null, "abc"));
+        assertFalse(shuffler.isValidShuffle("a", null, "ab"));
+        assertFalse(shuffler.isValidShuffle("ab", null, "abc"));
     }
 
     public void testIsValidShuffleSourceStringEmpty() {

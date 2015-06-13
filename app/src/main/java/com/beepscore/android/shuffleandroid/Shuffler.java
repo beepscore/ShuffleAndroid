@@ -78,6 +78,18 @@ public class Shuffler {
         return null;
     }
 
+    public int lengthOfSource(String string) {
+        if (string == null) {
+            return 0;
+        } else {
+            return string.length();
+        }
+    }
+
+    public int lengthOfSources(String string0, String string1) {
+        return lengthOfSource(string0) + lengthOfSource(string1);
+    }
+
     protected Boolean isValidShuffleForEdgeCases(String shuffledString, String string0, String string1) {
 
         if (shuffledString == null) {
@@ -130,6 +142,7 @@ public class Shuffler {
         Node root = new Node("", null, null);
         queue.add(root);
 
+        final int LENGTH_OF_SOURCES = lengthOfSources(string0, string1);
         int indexString0 = 0;
         int indexString1 = 0;
 
@@ -139,7 +152,8 @@ public class Shuffler {
             //Log.d("breadth-first", node.toString());
             this.nodesSearched.add(node.value);
 
-            if (isNodeValueEqualToValue(node, shuffledString)) {
+            if ((isNodeValueEqualToValue(node, shuffledString))
+                    && (node.value.length() == LENGTH_OF_SOURCES)) {
                 return true;
             }
 
