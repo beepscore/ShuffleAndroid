@@ -72,5 +72,3 @@ Big O complexity is exponential.
 Generate all possible candidates for string0, of any length 1 to (m + n).
 Then search candidates for one that equals the actual string0.  
 This approach is very "brute force" and likely impractical.
-
-
