@@ -6,22 +6,28 @@ package com.beepscore.android.shuffleandroid;
 public class Node {
 
     String value = null;
+    Integer index0 = null;
+    Integer index1 = null;
     Node left = null;
     Node right = null;
 
-    public Node(String value, Node left, Node right) {
+    public Node(String value, Integer index0, Integer index1, Node left, Node right) {
         this.value = value;
+        this.index0 = index0;
+        this.index1 = index1;
         this.left = left;
         this.right = right;
     }
 
     public Node() {
-        this(null, null, null);
+        this(null, null, null, null, null);
     }
 
     @Override
     public String toString() {
         String description =  valueDescription(value) + ", "
+                + indexDescription(index0) + ", "
+                + indexDescription(index1) + ", "
                 + leftDescription(left) + ", "
                 + rightDescription(right);
         return description;
@@ -33,6 +39,16 @@ public class Node {
             description = description.concat("null");
         } else {
             description = description.concat(aValue);
+        }
+        return description;
+    }
+
+    protected String indexDescription(Integer index) {
+        String description = "";
+        if (index == null) {
+            description = description.concat("null");
+        } else {
+            description = description.concat(index.toString());
         }
         return description;
     }

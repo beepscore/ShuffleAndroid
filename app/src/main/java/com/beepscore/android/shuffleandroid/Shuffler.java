@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Set;
 
 /**
  * Created by stevebaker on 6/12/15.
@@ -139,17 +138,15 @@ public class Shuffler {
         // http://stackoverflow.com/questions/12179887/android-queue-vs-stack
         Queue<Node> queue = new LinkedList<Node>();
 
-        Node root = new Node("", null, null);
-        queue.add(root);
-
         final int LENGTH_OF_SOURCES = lengthOfSources(string0, string1);
-        int indexString0 = 0;
-        int indexString1 = 0;
+
+        Node root = new Node("", 0, 0, null, null);
+        queue.add(root);
 
         while (!queue.isEmpty()) {
 
             Node node = queue.remove();
-            //Log.d("breadth-first", node.toString());
+            //Log.d("fooby", node.toString());
             this.nodesSearched.add(node.value);
 
             if ((isNodeValueEqualToValue(node, shuffledString))
@@ -157,24 +154,27 @@ public class Shuffler {
                 return true;
             }
 
-            if ((string0 != null)
-                    && (indexString0 < string0.length())) {
-                String string0AtIndex = StringUtils.getSubstringLengthOneAtIndex(string0, indexString0);
-                String nodeLeftValue = node.value.concat(string0AtIndex);
-                node.left = new Node(nodeLeftValue, null, null);
-                queue.add(node.left);
-                indexString0 += 1;
-            }
+            //String shuffledStringStart = StringUtils.getSubstringInclusive(shuffledString, 0, node.value.length());
+            String shuffledStringStart = shuffledString.substring(0, node.value.length());
+            if (node.value.equals(shuffledStringStart)) {
+                // candidate is potentially valid
 
-            if ((string1 != null)
-                    && (indexString1 < string1.length())) {
-                String string1AtIndex = StringUtils.getSubstringLengthOneAtIndex(string1, indexString1);
-                String nodeRightValue = node.value.concat(string1AtIndex);
-                node.right = new Node(nodeRightValue, null, null);
-                queue.add(node.right);
-                indexString1 += 1;
-            }
+                if ((string0 != null)
+                        && (node.index0 < string0.length())) {
+                    String string0AtIndex = StringUtils.getSubstringLengthOneAtIndex(string0, node.index0);
+                    String nodeLeftValue = node.value.concat(string0AtIndex);
+                    node.left = new Node(nodeLeftValue, node.index0 + 1, node.index1, null, null);
+                    queue.add(node.left);
+                }
 
+                if ((string1 != null)
+                        && (node.index1 < string1.length())) {
+                    String string1AtIndex = StringUtils.getSubstringLengthOneAtIndex(string1, node.index1);
+                    String nodeRightValue = node.value.concat(string1AtIndex);
+                    node.right = new Node(nodeRightValue, node.index0, node.index1 + 1, null, null);
+                    queue.add(node.right);
+                }
+            }
         }
 
         // didn't find a solution

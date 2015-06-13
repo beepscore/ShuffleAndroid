@@ -12,13 +12,15 @@ public class NodeTest extends TestCase {
         assertNotNull(node);
 
         assertNull(node.value);
+        assertNull(node.index0);
+        assertNull(node.index1);
         assertNull(node.left);
         assertNull(node.right);
     }
 
     public void testNodeToStringPropertiesNull() {
         Node node = new Node();
-        String expected = "null, left: null, right: null";
+        String expected = "null, null, null, left: null, right: null";
         assertEquals(expected, node.toString());
     }
 
@@ -29,7 +31,7 @@ public class NodeTest extends TestCase {
         joe.value = testValue;
         assertEquals(testValue, joe.value);
 
-        String expectedDescription = "Joe, left: null, right: null";
+        String expectedDescription = "Joe, null, null, left: null, right: null";
         assertEquals(expectedDescription, joe.toString());
 
         Node larry = new Node();
@@ -37,18 +39,18 @@ public class NodeTest extends TestCase {
         larry.value = "Larry";
         assertEquals(larry, joe.left);
 
-        expectedDescription = "Joe, left.value: Larry, right: null";
+        expectedDescription = "Joe, null, null, left.value: Larry, right: null";
         assertEquals(expectedDescription, joe.toString());
 
         Node rick = new Node();
         joe.right = rick;
         assertEquals(rick, joe.right);
 
-        expectedDescription = "Joe, left.value: Larry, right.value: null";
+        expectedDescription = "Joe, null, null, left.value: Larry, right.value: null";
         assertEquals(expectedDescription, joe.toString());
 
         rick.value = "Rick";
-        expectedDescription = "Joe, left.value: Larry, right.value: Rick";
+        expectedDescription = "Joe, null, null, left.value: Larry, right.value: Rick";
         assertEquals(expectedDescription, joe.toString());
     }
 
@@ -56,7 +58,7 @@ public class NodeTest extends TestCase {
         String value = "Joe";
         Node larry = new Node();
         Node rick = new Node();
-        Node joe = new Node(value, larry, rick);
+        Node joe = new Node(value, null, null, larry, rick);
 
         assertNotNull(joe);
         assertEquals(value, joe.value);
