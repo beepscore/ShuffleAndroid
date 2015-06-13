@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Created by stevebaker on 6/12/15.
@@ -77,8 +78,7 @@ public class Shuffler {
         return null;
     }
 
-    public boolean isValidShuffle(String shuffledString,
-                                  String string0, String string1) {
+    protected Boolean isValidShuffleForEdgeCases(String shuffledString, String string0, String string1) {
 
         if (shuffledString == null) {
             if ((string0 == null) && (string1 == null)) {
@@ -110,6 +110,16 @@ public class Shuffler {
         if (((string1 == null) || (string1.length() == 0))
                 && shuffledString.equals(string0)) {
             return true;
+        }
+        return null;
+    }
+
+    public boolean isValidShuffle(String shuffledString,
+                                  String string0, String string1) {
+
+        Boolean edgeCaseResult = isValidShuffleForEdgeCases(shuffledString, string0, string1);
+        if (edgeCaseResult != null) {
+            return edgeCaseResult;
         }
 
         // TODO: Fix me
@@ -156,13 +166,16 @@ public class Shuffler {
         // didn't find a solution
         return false;
     }
-
     /** Potential Alternative solution.
      *  would need to add code to handle edge cases
      */
-    /*
     public boolean isValidShuffle2(String shuffledString,
                                    String string0, String string1) {
+
+        Boolean edgeCaseResult = isValidShuffleForEdgeCases(shuffledString, string0, string1);
+        if (edgeCaseResult != null) {
+            return edgeCaseResult;
+        }
 
         String shuffledStringAfterRemovingString0 = StringUtils.stringByRemovingLettersInString(shuffledString, string0);
         String shuffledStringAfterRemovingString1 = StringUtils.stringByRemovingLettersInString(shuffledString, string1);
@@ -174,6 +187,5 @@ public class Shuffler {
             return false;
         }
     }
-    */
 
 }

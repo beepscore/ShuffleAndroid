@@ -78,6 +78,52 @@ public class ShufflerTest extends TestCase {
         assertEquals(expected, shuffler.nodesSearched);
     }
 
+    //==========================================================================
+
+    public void testIsValidShuffleForEdgeCasesShuffledStringNull() {
+        Shuffler shuffler = new Shuffler();
+
+        assertTrue(shuffler.isValidShuffleForEdgeCases(null, null, null));
+
+        assertFalse(shuffler.isValidShuffleForEdgeCases(null, "a", null));
+        assertFalse(shuffler.isValidShuffleForEdgeCases(null, null, "b"));
+        assertFalse(shuffler.isValidShuffleForEdgeCases(null, "a", "b"));
+    }
+
+    public void testIsValidShuffleForEdgeCasesShuffledStringEmpty() {
+        Shuffler shuffler = new Shuffler();
+
+        assertFalse(shuffler.isValidShuffleForEdgeCases("", null, null));
+        assertFalse(shuffler.isValidShuffleForEdgeCases("", "a", null));
+        assertFalse(shuffler.isValidShuffleForEdgeCases("", null, "xy"));
+        assertFalse(shuffler.isValidShuffleForEdgeCases("", "a", "b"));
+    }
+
+    public void testIsValidShuffleForEdgeCasesSourceStringNull() {
+        Shuffler shuffler = new Shuffler();
+
+        assertTrue(shuffler.isValidShuffleForEdgeCases("abc", "abc", null));
+        assertTrue(shuffler.isValidShuffleForEdgeCases("abc", null, "abc"));
+
+        assertFalse(shuffler.isValidShuffleForEdgeCases("abc", null, null));
+
+        assertNull(shuffler.isValidShuffleForEdgeCases("a", null, "ab"));
+        assertNull(shuffler.isValidShuffleForEdgeCases("ab", null, "abc"));
+        assertNull(shuffler.isValidShuffleForEdgeCases("abc", null, "ab"));
+    }
+
+    public void testIsValidShuffleForEdgeCasesSourceStringEmpty() {
+        Shuffler shuffler = new Shuffler();
+
+        assertTrue(shuffler.isValidShuffleForEdgeCases("", "", ""));
+        assertTrue(shuffler.isValidShuffleForEdgeCases("abc", "abc", ""));
+        assertTrue(shuffler.isValidShuffleForEdgeCases("abc", "", "abc"));
+
+        assertNull(shuffler.isValidShuffleForEdgeCases("abc", "", ""));
+    }
+
+    //==========================================================================
+
     public void testIsValidShuffleShuffledStringNull() {
         Shuffler shuffler = new Shuffler();
 
@@ -105,10 +151,11 @@ public class ShufflerTest extends TestCase {
 
         assertFalse(shuffler.isValidShuffle("abc", null, null));
 
-        //TODO: Fix method so this test case passes
-        //assertFalse(shuffler.isValidShuffle("ab", null, "abc"));
-
         assertFalse(shuffler.isValidShuffle("abc", null, "ab"));
+
+        //TODO: Fix method so these test cases pass
+        //assertFalse(shuffler.isValidShuffle("a", null, "ab"));
+        //assertFalse(shuffler.isValidShuffle("ab", null, "abc"));
     }
 
     public void testIsValidShuffleSourceStringEmpty() {
@@ -119,6 +166,51 @@ public class ShufflerTest extends TestCase {
         assertTrue(shuffler.isValidShuffle("abc", "", "abc"));
 
         assertFalse(shuffler.isValidShuffle("abc", "", ""));
+    }
+
+    //==========================================================================
+
+    public void testIsValidShuffle2ShuffledStringNull() {
+        Shuffler shuffler = new Shuffler();
+
+        assertTrue(shuffler.isValidShuffle2(null, null, null));
+
+        assertFalse(shuffler.isValidShuffle2(null, "a", null));
+        assertFalse(shuffler.isValidShuffle2(null, null, "b"));
+        assertFalse(shuffler.isValidShuffle2(null, "a", "b"));
+    }
+
+    public void testIsValidShuffle2ShuffledStringEmpty() {
+        Shuffler shuffler = new Shuffler();
+
+        assertFalse(shuffler.isValidShuffle2("", null, null));
+        assertFalse(shuffler.isValidShuffle2("", "a", null));
+        assertFalse(shuffler.isValidShuffle2("", null, "xy"));
+        assertFalse(shuffler.isValidShuffle2("", "a", "b"));
+    }
+
+    public void testIsValidShuffle2SourceStringNull() {
+        Shuffler shuffler = new Shuffler();
+
+        assertTrue(shuffler.isValidShuffle2("abc", "abc", null));
+        assertTrue(shuffler.isValidShuffle2("abc", null, "abc"));
+
+        assertFalse(shuffler.isValidShuffle2("abc", null, null));
+
+        assertFalse(shuffler.isValidShuffle2("a", null, "ab"));
+        assertFalse(shuffler.isValidShuffle2("ab", null, "abc"));
+
+        assertFalse(shuffler.isValidShuffle2("abc", null, "ab"));
+    }
+
+    public void testIsValidShuffle2SourceStringEmpty() {
+        Shuffler shuffler = new Shuffler();
+
+        assertTrue(shuffler.isValidShuffle2("", "", ""));
+        assertTrue(shuffler.isValidShuffle2("abc", "abc", ""));
+        assertTrue(shuffler.isValidShuffle2("abc", "", "abc"));
+
+        assertFalse(shuffler.isValidShuffle2("abc", "", ""));
     }
 
 }
