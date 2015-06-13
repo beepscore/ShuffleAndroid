@@ -213,4 +213,19 @@ public class ShufflerTest extends TestCase {
         assertFalse(shuffler.isValidShuffle2("abc", "", ""));
     }
 
+    public void testIsValidShuffle2() {
+        Shuffler shuffler = new Shuffler();
+
+        assertTrue(shuffler.isValidShuffle2("dabecf", "abc", "def"));
+        assertTrue(shuffler.isValidShuffle2("abcdefghijkl", "abcghi", "defjkl"));
+    }
+
+    public void testIsValidShuffle2LettersInCommon() {
+        Shuffler shuffler = new Shuffler();
+
+        // string0 and string1 contain letters in common
+        // TODO fixme
+        // assertTrue(shuffler.isValidShuffle2("abca", "ac", "ba"));
+        //assertTrue(shuffler.isValidShuffle2("acbbca", "abc", "cba"));
+    }
 }
