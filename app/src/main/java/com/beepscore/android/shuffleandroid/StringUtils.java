@@ -22,7 +22,19 @@ public class StringUtils {
         return substring;
     }
 
+    /**
+     * @param aString
+     * @param index
+     * @return substring of length one at index.
+     * return empty string "" if aString is null or empty or index is out of range.
+     */
     public static String getSubstringLengthOneAtIndex(String aString, int index) {
+        if ((aString == null)
+                || (aString.length() == 0)
+                || (index < 0)
+                || (index >= aString.length())) {
+            return "";
+        }
         return getSubstringInclusive(aString, index, index);
     }
 

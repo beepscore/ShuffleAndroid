@@ -23,6 +23,19 @@ public class StringUtilsTest extends TestCase {
         assertEquals("d", StringUtils.getSubstringLengthOneAtIndex("ab d", 3));
     }
 
+    public void testGetSubstringLengthOneAtIndexStringNull() {
+        assertEquals("", StringUtils.getSubstringLengthOneAtIndex(null, 0));
+    }
+
+    public void testGetSubstringLengthOneAtIndexStringEmpty() {
+        assertEquals("", StringUtils.getSubstringLengthOneAtIndex("", 0));
+    }
+
+    public void testGetSubstringLengthOneAtIndexOutOfBounds() {
+        assertEquals("", StringUtils.getSubstringLengthOneAtIndex("abc", -1));
+        assertEquals("", StringUtils.getSubstringLengthOneAtIndex("abc", 3));
+    }
+
     public void testStringByRemovingLettersInString() {
         assertEquals("b", StringUtils.stringByRemovingLettersInString("ab", "a"));
         assertEquals("a", StringUtils.stringByRemovingLettersInString("ab", "b"));
