@@ -33,6 +33,11 @@ public class StringUtils {
      * @return
      */
     public static String stringByRemovingLettersInString(String string, String remove) {
+
+        if (remove == null) {
+            return string;
+        }
+
         String result = string;
         for (int index = 0; index < remove.length(); ++index) {
             String removeAtIndex = StringUtils.getSubstringLengthOneAtIndex(remove, index);
