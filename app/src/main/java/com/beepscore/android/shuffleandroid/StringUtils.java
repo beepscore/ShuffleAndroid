@@ -22,6 +22,15 @@ public class StringUtils {
         return substring;
     }
 
+
+    public static boolean isStringNullOrEmpty(String string) {
+        if ((string == null) || (string.length() == 0)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * @param aString
      * @param index
@@ -29,8 +38,7 @@ public class StringUtils {
      * return empty string "" if aString is null or empty or index is out of range.
      */
     public static String getSubstringLengthOneAtIndex(String aString, int index) {
-        if ((aString == null)
-                || (aString.length() == 0)
+        if (isStringNullOrEmpty(aString)
                 || (index < 0)
                 || (index >= aString.length())) {
             return "";

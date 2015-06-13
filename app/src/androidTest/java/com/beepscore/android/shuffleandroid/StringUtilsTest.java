@@ -36,6 +36,13 @@ public class StringUtilsTest extends TestCase {
         assertEquals("", StringUtils.getSubstringLengthOneAtIndex("abc", 3));
     }
 
+    public void testIsStringNullOrEmpty() {
+        assertTrue(StringUtils.isStringNullOrEmpty(null));
+        assertTrue(StringUtils.isStringNullOrEmpty(""));
+        
+        assertFalse(StringUtils.isStringNullOrEmpty("B"));
+    }
+
     public void testStringByRemovingLettersInString() {
         assertEquals("b", StringUtils.stringByRemovingLettersInString("ab", "a"));
         assertEquals("a", StringUtils.stringByRemovingLettersInString("ab", "b"));
