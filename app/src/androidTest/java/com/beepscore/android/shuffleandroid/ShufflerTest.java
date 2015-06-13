@@ -11,71 +11,9 @@ import java.util.List;
  */
 public class ShufflerTest extends TestCase {
 
-    Node start = null;
-
     @Override
     public void setUp() throws Exception {
         super.setUp();
-
-        // reference tree graph
-        // https://en.wikipedia.org/wiki/Tree_traversal
-        Node nodeC = new Node("C", null, null, null, null);
-        Node nodeE = new Node("E", null, null, null, null);
-        Node nodeD = new Node("D", null, null, nodeC, nodeE);
-
-        Node nodeA = new Node("A", null, null, null, null);
-        Node nodeB = new Node("B", null, null, nodeA, nodeD);
-
-        Node nodeH = new Node("H", null, null, null, null);
-        Node nodeI = new Node("I", null, null, nodeH, null);
-        Node nodeG = new Node("G", null, null, null, nodeI);
-
-        Node nodeF = new Node("F", null, null, nodeB, nodeG);
-
-        start = nodeF;
-    }
-
-    // ************************************************************************
-
-    public void testNodeInTreeWithValueBreadthFirstValueTreeNull() {
-        Shuffler shuffler = new Shuffler();
-        String value = "A";
-        assertNull(shuffler.nodeInTreeWithValueBreadthFirst(null, value));
-    }
-
-    public void testNodeInTreeWithValueBreadthFirstValueNull() {
-        Shuffler shuffler = new Shuffler();
-
-        Node actual = shuffler.nodeInTreeWithValueBreadthFirst(start, null);
-        assertNull(actual);
-    }
-
-    public void testNodeInTreeWithValueBreadthFirst() {
-        Shuffler shuffler = new Shuffler();
-
-        String value = "I";
-        Node actual = shuffler.nodeInTreeWithValueBreadthFirst(start, value);
-        assertEquals(value, actual.value);
-    }
-
-    public void testNodeInTreeWithValueBreadthFirstValueNotInTree() {
-        Shuffler shuffler = new Shuffler();
-
-        String value = "X";
-        Node actual = shuffler.nodeInTreeWithValueBreadthFirst(start, value);
-        assertNull(actual);
-
-        List<String> expected = new ArrayList<>();
-        expected.add("F");
-        expected.add("B");
-        expected.add("G");
-        expected.add("A");
-        expected.add("D");
-        expected.add("I");
-        expected.add("C");
-        expected.add("E");
-        expected.add("H");
-        assertEquals(expected, shuffler.nodesSearched);
     }
 
     //==========================================================================

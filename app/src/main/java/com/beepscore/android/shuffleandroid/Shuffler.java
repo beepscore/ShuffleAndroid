@@ -31,52 +31,6 @@ public class Shuffler {
         return false;
     }
 
-    /** Search a binary tree for a node with value.
-     * Tree nodes are non-null.
-     * Search is breadth first.
-     * Search is "pre-order"- checks node before subtrees.
-     * Search checks node, then left subtree, then right subtree.
-     * @param root starting node of binary tree.
-     * @param value may be null.
-     * @return first node found with value.
-     * return null if not found
-     * return null if root is null
-     * return null if value is null
-     */
-    public Node nodeInTreeWithValueBreadthFirst(Node root, String value) {
-
-        if ((root == null) || (value == null)) {
-            return null;
-        }
-
-        // LinkedList implements Queue, Dequeue
-        // http://stackoverflow.com/questions/12179887/android-queue-vs-stack
-        Queue<Node> queue = new LinkedList<Node>();
-
-        queue.add(root);
-
-        while (!queue.isEmpty()) {
-
-            Node node = queue.remove();
-            //Log.d("breadth-first", node.toString());
-            this.nodesSearched.add(node.value);
-
-            if (isNodeValueEqualToValue(node, value)) {
-                return node;
-            }
-
-            if (node.left != null) {
-                queue.add(node.left);
-            }
-
-            if (node.right != null) {
-                queue.add(node.right);
-            }
-        }
-        // didn't find a match
-        return null;
-    }
-
     public int lengthOfSource(String string) {
         if (string == null) {
             return 0;
@@ -180,8 +134,10 @@ public class Shuffler {
         // didn't find a solution
         return false;
     }
-    /** Potential Alternative solution.
-     *  would need to add code to handle edge cases
+
+    /** Potential alternative solution.
+     *  Currently can return incorrect result if string0 and string1 have letters in common.
+     *  Would need to add code to handle edge cases.
      */
     public boolean isValidShuffle2(String shuffledString,
                                    String string0, String string1) {
