@@ -31,7 +31,7 @@ public class Shuffler {
         return false;
     }
 
-    public int lengthOfSource(String string) {
+    protected int lengthOfSource(String string) {
         if (string == null) {
             return 0;
         } else {
@@ -39,10 +39,20 @@ public class Shuffler {
         }
     }
 
-    public int lengthOfSources(String string0, String string1) {
+    protected int lengthOfSources(String string0, String string1) {
         return lengthOfSource(string0) + lengthOfSource(string1);
     }
 
+    /**
+     * Checks several edge cases such as arguments null or empty strings
+     * Uses Boolean (true, false, null) instead of boolean (true, false)
+     * @param shuffledString
+     * @param string0
+     * @param string1
+     * @return true if shuffledString is a valid shuffle of string0 and string1.
+     * return false if shuffledString is not a valid shuffle of string0 and string1.
+     * return null if method can't tell if shuffledString is a valid shuffle of string0 and string1.
+     */
     protected Boolean isValidShuffleForEdgeCases(String shuffledString, String string0, String string1) {
 
         if (shuffledString == null) {
@@ -79,11 +89,20 @@ public class Shuffler {
         return null;
     }
 
+    /**
+     * Traverses binary tree breadth first.
+     * Uses a queue instead of recursion to reduce risk of call stack overflow.
+     * @param shuffledString a potential shuffle of string0 and string1
+     * @param string0 a source string
+     * @param string1 a source string
+     * @return true if shuffledString is a valid shuffle of string0 and string1
+     */
     public boolean isValidShuffle(String shuffledString,
                                   String string0, String string1) {
 
         Boolean edgeCaseResult = isValidShuffleForEdgeCases(shuffledString, string0, string1);
         if (edgeCaseResult != null) {
+            // isValidShuffleForEdgeCases() was able to determine if shuffle is valid
             return edgeCaseResult;
         }
 
