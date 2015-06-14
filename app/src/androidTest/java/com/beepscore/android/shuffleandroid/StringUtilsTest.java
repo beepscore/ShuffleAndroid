@@ -27,11 +27,11 @@ public class StringUtilsTest extends TestCase {
         assertEquals("", StringUtils.getSafeSubstringLengthOneAtIndex(null, 0));
     }
 
-    public void testGetSubstringLengthOneAtIndexStringEmpty() {
+    public void testGetSafeSubstringLengthOneAtIndexStringEmpty() {
         assertEquals("", StringUtils.getSafeSubstringLengthOneAtIndex("", 0));
     }
 
-    public void testGetSubstringLengthOneAtIndexOutOfBounds() {
+    public void testGetSafeSubstringLengthOneAtIndexOutOfBounds() {
         assertEquals("", StringUtils.getSafeSubstringLengthOneAtIndex("abc", -1));
         assertEquals("", StringUtils.getSafeSubstringLengthOneAtIndex("abc", 3));
     }
