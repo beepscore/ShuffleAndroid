@@ -118,6 +118,12 @@ public class ShufflerTest extends TestCase {
         assertTrue(shuffler.isValidShuffle("abca", "ac", "ba"));
         assertTrue(shuffler.isValidShuffle("acbbca", "abc", "cba"));
         assertTrue(shuffler.isValidShuffle("abaabza", "aba", "abza"));
+        assertTrue(shuffler.isValidShuffle("This is a great day indeed!",
+                "T reayde", "hisis a gt da ined!"));
+
+        // expect false because strings are case sensitive
+        assertFalse(shuffler.isValidShuffle("This is a great day indeed!",
+                "t reayde", "hisis a gt da ined!"));
     }
 
 }
