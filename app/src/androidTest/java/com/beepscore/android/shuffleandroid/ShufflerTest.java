@@ -109,6 +109,8 @@ public class ShufflerTest extends TestCase {
         assertTrue(shuffler.isValidShuffle("ab", "a", "b"));
         assertTrue(shuffler.isValidShuffle("dabecf", "abc", "def"));
         assertTrue(shuffler.isValidShuffle("abcdefghijkl", "abcghi", "defjkl"));
+
+        assertFalse(shuffler.isValidShuffle("abcdefghijkl", "abchgi", "defjkl"));
     }
 
     public void testIsValidShuffleLettersInCommon() {
@@ -126,4 +128,14 @@ public class ShufflerTest extends TestCase {
                 "t reayde", "hisis a gt da ined!"));
     }
 
+    public void testIsValidShuffleUTF8() {
+        Shuffler shuffler = new Shuffler();
+
+        // Chinese from http://www.foxconn.com/index.html
+        assertTrue(shuffler.isValidShuffle("公告本公司董事會通過104年第一季合併",
+                "公司會0合", "告本公董事通過14年第一季併"));
+
+        assertFalse(shuffler.isValidShuffle("公告本公司董事會通過104年第一季合併",
+                "公司0合", "會告本公董事通過14年第一季併"));
+    }
 }
