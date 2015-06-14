@@ -57,7 +57,7 @@ public class ShufflerTest extends TestCase {
         assertTrue(shuffler.isValidShuffleForEdgeCases("abc", "abc", ""));
         assertTrue(shuffler.isValidShuffleForEdgeCases("abc", "", "abc"));
 
-        assertNull(shuffler.isValidShuffleForEdgeCases("abc", "", ""));
+        assertFalse(shuffler.isValidShuffleForEdgeCases("abc", "", ""));
     }
 
     //==========================================================================
@@ -88,20 +88,15 @@ public class ShufflerTest extends TestCase {
         assertTrue(shuffler.isValidShuffle("abc", null, "abc"));
 
         assertFalse(shuffler.isValidShuffle("abc", null, null));
-
         assertFalse(shuffler.isValidShuffle("abc", null, "ab"));
-
-        // TODO fixme
-        //assertFalse(shuffler.isValidShuffle("a", null, "ab"));
-        //assertFalse(shuffler.isValidShuffle("ab", null, "abc"));
+        assertFalse(shuffler.isValidShuffle("a", null, "ab"));
+        assertFalse(shuffler.isValidShuffle("ab", null, "abc"));
     }
 
     public void testIsValidShuffleSourceStringEmpty() {
         Shuffler shuffler = new Shuffler();
 
-        // TODO fixme
-        //assertTrue(shuffler.isValidShuffle("", "", ""));
-
+        assertTrue(shuffler.isValidShuffle("", "", ""));
         assertTrue(shuffler.isValidShuffle("abc", "abc", ""));
         assertTrue(shuffler.isValidShuffle("abc", "", "abc"));
 
@@ -122,6 +117,7 @@ public class ShufflerTest extends TestCase {
         // string0 and string1 contain letters in common
         assertTrue(shuffler.isValidShuffle("abca", "ac", "ba"));
         assertTrue(shuffler.isValidShuffle("acbbca", "abc", "cba"));
+        assertTrue(shuffler.isValidShuffle("abaabza", "aba", "abza"));
     }
 
     //==========================================================================

@@ -7,39 +7,39 @@ import junit.framework.TestCase;
  */
 public class StringUtilsTest extends TestCase {
 
-    public void testGetSubstringInclusive() {
-        assertEquals("a", StringUtils.getSubstringInclusive("a", 0, 0));
-        assertEquals("a", StringUtils.getSubstringInclusive("abc", 0, 0));
-        assertEquals("b", StringUtils.getSubstringInclusive("abc", 1, 1));
-        assertEquals("ab", StringUtils.getSubstringInclusive("abc", 0, 1));
-        assertEquals(" d", StringUtils.getSubstringInclusive("ab d", 2, 3));
+    public void testGetSafeSubstringInclusive() {
+        assertEquals("a", StringUtils.getSafeSubstringInclusive("a", 0, 0));
+        assertEquals("a", StringUtils.getSafeSubstringInclusive("abc", 0, 0));
+        assertEquals("b", StringUtils.getSafeSubstringInclusive("abc", 1, 1));
+        assertEquals("ab", StringUtils.getSafeSubstringInclusive("abc", 0, 1));
+        assertEquals(" d", StringUtils.getSafeSubstringInclusive("ab d", 2, 3));
     }
 
-    public void testGetSubstringLengthOneAtIndex() {
-        assertEquals("a", StringUtils.getSubstringLengthOneAtIndex("a", 0));
-        assertEquals("a", StringUtils.getSubstringLengthOneAtIndex("abc", 0));
-        assertEquals("b", StringUtils.getSubstringLengthOneAtIndex("abc", 1));
-        assertEquals(" ", StringUtils.getSubstringLengthOneAtIndex("ab d", 2));
-        assertEquals("d", StringUtils.getSubstringLengthOneAtIndex("ab d", 3));
+    public void testGetSafeSubstringLengthOneAtIndex() {
+        assertEquals("a", StringUtils.getSafeSubstringLengthOneAtIndex("a", 0));
+        assertEquals("a", StringUtils.getSafeSubstringLengthOneAtIndex("abc", 0));
+        assertEquals("b", StringUtils.getSafeSubstringLengthOneAtIndex("abc", 1));
+        assertEquals(" ", StringUtils.getSafeSubstringLengthOneAtIndex("ab d", 2));
+        assertEquals("d", StringUtils.getSafeSubstringLengthOneAtIndex("ab d", 3));
     }
 
-    public void testGetSubstringLengthOneAtIndexStringNull() {
-        assertEquals("", StringUtils.getSubstringLengthOneAtIndex(null, 0));
+    public void testGetSafeSubstringLengthOneAtIndexStringNull() {
+        assertEquals("", StringUtils.getSafeSubstringLengthOneAtIndex(null, 0));
     }
 
     public void testGetSubstringLengthOneAtIndexStringEmpty() {
-        assertEquals("", StringUtils.getSubstringLengthOneAtIndex("", 0));
+        assertEquals("", StringUtils.getSafeSubstringLengthOneAtIndex("", 0));
     }
 
     public void testGetSubstringLengthOneAtIndexOutOfBounds() {
-        assertEquals("", StringUtils.getSubstringLengthOneAtIndex("abc", -1));
-        assertEquals("", StringUtils.getSubstringLengthOneAtIndex("abc", 3));
+        assertEquals("", StringUtils.getSafeSubstringLengthOneAtIndex("abc", -1));
+        assertEquals("", StringUtils.getSafeSubstringLengthOneAtIndex("abc", 3));
     }
 
     public void testIsStringNullOrEmpty() {
         assertTrue(StringUtils.isStringNullOrEmpty(null));
         assertTrue(StringUtils.isStringNullOrEmpty(""));
-        
+
         assertFalse(StringUtils.isStringNullOrEmpty("B"));
     }
 
