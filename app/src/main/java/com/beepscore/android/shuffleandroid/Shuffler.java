@@ -220,27 +220,4 @@ public class Shuffler {
         return false;
     }
 
-    /** Potential alternative solution.
-     *  Currently can return incorrect result if string0 and string1 have letters in common.
-     *  Would need to add code to handle edge cases.
-     */
-    public boolean isValidShuffle2(String shuffledString,
-                                   String string0, String string1) {
-
-        Boolean edgeCaseResult = isValidShuffleForEdgeCases(shuffledString, string0, string1);
-        if (edgeCaseResult != null) {
-            return edgeCaseResult;
-        }
-
-        String shuffledStringAfterRemovingString0 = StringUtils.stringByRemovingLettersInString(shuffledString, string0);
-        String shuffledStringAfterRemovingString1 = StringUtils.stringByRemovingLettersInString(shuffledString, string1);
-
-        if (shuffledStringAfterRemovingString0.equals(string1)
-                && (shuffledStringAfterRemovingString1.equals(string0))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }
