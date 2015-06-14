@@ -31,18 +31,6 @@ public class Shuffler {
         return false;
     }
 
-    protected int lengthOfSource(String string) {
-        if (string == null) {
-            return 0;
-        } else {
-            return string.length();
-        }
-    }
-
-    protected int lengthOfSources(String string0, String string1) {
-        return lengthOfSource(string0) + lengthOfSource(string1);
-    }
-
     /**
      * Checks several edge cases such as arguments null or empty strings
      * Uses Boolean (true, false, null) instead of boolean (true, false)
