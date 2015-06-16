@@ -48,24 +48,4 @@ public class StringUtils {
         return getSafeSubstringInclusive(aString, index, index);
     }
 
-    /** For each character in remove, if string contains the character
-     * the method removes the first occurrence.
-     * @param string
-     * @param remove
-     * @return
-     */
-    public static String stringByRemovingLettersInString(String string, String remove) {
-
-        if (remove == null) {
-            return string;
-        }
-
-        String result = string;
-        for (int index = 0; index < remove.length(); ++index) {
-            String removeAtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(remove, index);
-            result = result.replaceFirst(removeAtIndex, "");
-        }
-        return result;
-    }
-
 }

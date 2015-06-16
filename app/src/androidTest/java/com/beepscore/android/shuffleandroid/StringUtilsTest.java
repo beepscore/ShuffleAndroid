@@ -43,13 +43,4 @@ public class StringUtilsTest extends TestCase {
         assertFalse(StringUtils.isStringNullOrEmpty("B"));
     }
 
-    public void testStringByRemovingLettersInString() {
-        assertEquals("b", StringUtils.stringByRemovingLettersInString("ab", "a"));
-        assertEquals("a", StringUtils.stringByRemovingLettersInString("ab", "b"));
-        assertEquals("", StringUtils.stringByRemovingLettersInString("ab", "ab"));
-
-        // can't remove "b" from "a"
-        assertEquals("a", StringUtils.stringByRemovingLettersInString("a", "b"));
-    }
-
 }
