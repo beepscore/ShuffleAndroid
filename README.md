@@ -2,6 +2,10 @@
 Given three strings, write a method to test if shuffledString is a valid "shuffle" of string0 and string1.
 
 # References
+Shuffle  
+Port of this project "ShuffleAndroid" to Objective C iOS  
+<https://github.com/beepscore/Shuffle>
+
 Tree Traversal
 <https://en.wikipedia.org/wiki/Tree_traversal>
 
