@@ -194,7 +194,6 @@ public class Shuffler {
             }
 
             String shuffledStringStart = shuffledString.substring(0, node.value.length());
-            //String shuffledStringStart = StringUtils.getSafeSubstringInclusive(shuffledString, 0, node.value.length());
             if (isNodeValueEqualToValue(node, shuffledStringStart)) {
                 // candidate is potentially valid
 
