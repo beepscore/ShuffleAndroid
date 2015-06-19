@@ -189,22 +189,8 @@ public class Shuffler {
             String shuffledStringStart = shuffledString.substring(0, node.value.length());
             if (isNodeValueEqualToValue(node, shuffledStringStart)) {
                 // candidate is potentially valid
-
-                if ((string0 != null)
-                        && (node.index0 < string0.length())) {
-                    String string0AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string0, node.index0 + 1);
-                    String nodeLeftValue = node.value.concat(string0AtIndex);
-                    node.left = new Node(nodeLeftValue, node.index0 + 1, node.index1, null, null);
-                    queue.add(node.left);
-                }
-
-                if ((string1 != null)
-                        && (node.index1 < string1.length())) {
-                    String string1AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string1, node.index1 + 1);
-                    String nodeRightValue = node.value.concat(string1AtIndex);
-                    node.right = new Node(nodeRightValue, node.index0, node.index1 + 1, null, null);
-                    queue.add(node.right);
-                }
+                addLeftNodeToNodeAndQueue(string0, queue, node);
+                addRightNodeToNodeAndQueue(string1, queue, node);
             }
         }
 
@@ -221,6 +207,26 @@ public class Shuffler {
         Node root = new Node("", INDEX_BEFORE_SOURCE_START, INDEX_BEFORE_SOURCE_START,
                 null, null);
         queue.add(root);
+    }
+
+    private void addLeftNodeToNodeAndQueue(String string0, Queue<Node> queue, Node node) {
+        if ((string0 != null)
+                && (node.index0 < string0.length())) {
+            String string0AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string0, node.index0 + 1);
+            String nodeLeftValue = node.value.concat(string0AtIndex);
+            node.left = new Node(nodeLeftValue, node.index0 + 1, node.index1, null, null);
+            queue.add(node.left);
+        }
+    }
+
+    private void addRightNodeToNodeAndQueue(String string1, Queue<Node> queue, Node node) {
+        if ((string1 != null)
+                && (node.index1 < string1.length())) {
+            String string1AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string1, node.index1 + 1);
+            String nodeRightValue = node.value.concat(string1AtIndex);
+            node.right = new Node(nodeRightValue, node.index0, node.index1 + 1, null, null);
+            queue.add(node.right);
+        }
     }
 
 }
