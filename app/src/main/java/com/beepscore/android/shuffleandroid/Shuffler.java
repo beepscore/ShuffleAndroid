@@ -165,7 +165,7 @@ public class Shuffler {
             return edgeCaseResult;
         }
 
-        // LinkedList implements Queue, Dequeue
+        // LinkedList implements fifo Queue, Dequeue
         // http://stackoverflow.com/questions/12179887/android-queue-vs-stack
         Queue<Node> queue = new LinkedList<Node>();
 
@@ -178,17 +178,18 @@ public class Shuffler {
             this.nodesSearched.add(node.value);
 
             if (isLeafNode(node, string0, string1)) {
+                // node is a terminal node
                 if (isASolution(node, shuffledString, string0, string1)) {
                     return true;
                 } else {
-                    // skip to next iteration
+                    // skip to next iteration, next node in queue
                     continue;
                 }
             }
 
             String shuffledStringStart = shuffledString.substring(0, node.value.length());
             if (isNodeValueEqualToValue(node, shuffledStringStart)) {
-                // candidate is potentially valid
+                // path to this node is a valid candidate, so add sub-branches
                 addLeftNodeToNodeAndQueue(string0, queue, node);
                 addRightNodeToNodeAndQueue(string1, queue, node);
             }
