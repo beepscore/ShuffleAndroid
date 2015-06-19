@@ -169,14 +169,7 @@ public class Shuffler {
         // http://stackoverflow.com/questions/12179887/android-queue-vs-stack
         Queue<Node> queue = new LinkedList<Node>();
 
-        // this index value signifies node has no letters from that source
-        // e.g. if node.index0 == -1, node.value contains no letters from string0
-        final int INDEX_BEFORE_SOURCE_START = -1;
-
-        // root node has empty value and no letters from either source string
-        Node root = new Node("", INDEX_BEFORE_SOURCE_START, INDEX_BEFORE_SOURCE_START,
-                null, null);
-        queue.add(root);
+        addRootNodeToQueue(queue);
 
         while (!queue.isEmpty()) {
 
@@ -217,6 +210,17 @@ public class Shuffler {
 
         // didn't find a solution
         return false;
+    }
+
+    private void addRootNodeToQueue(Queue<Node> queue) {
+        // this index value signifies node has no letters from that source
+        // e.g. if node.index0 == -1, node.value contains no letters from string0
+        final int INDEX_BEFORE_SOURCE_START = -1;
+
+        // root node has empty value and no letters from either source string
+        Node root = new Node("", INDEX_BEFORE_SOURCE_START, INDEX_BEFORE_SOURCE_START,
+                null, null);
+        queue.add(root);
     }
 
 }
