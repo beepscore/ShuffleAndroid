@@ -268,12 +268,17 @@ public class Shuffler {
             NodeExtended node = stack.peek();
             this.nodesSearched.add(node.value);
 
+
+            ////////////////////////
+            // TODO: after implement only push if valid, can eliminate this check
             String shuffledStringStart = shuffledString.substring(0, node.value.length());
             if (!isNodeValueEqualToValue(node, shuffledStringStart)) {
                 // this node is not a valid candidate, so discard it
                 stack.pop();
                 continue;
             }
+            ////////////////////////
+
 
             if (isLeafNode(node, string0, string1)) {
                 if (isASolution(node, shuffledString, string0, string1)) {
@@ -287,16 +292,16 @@ public class Shuffler {
             else {
                 if (node.hasUnvisitedChildren()) {
                     if (!node.didVisitLeft) {
-                        addLeftNodeToNodeAndStack(string0, stack, node);
                         node.didVisitLeft = true;
+                        addLeftNodeToNodeAndStack(string0, stack, node);
                     }
                     else if (!node.didVisitRight) {
-                        addRightNodeToNodeAndStack(string1, stack, node);
                         node.didVisitRight = true;
+                        addRightNodeToNodeAndStack(string1, stack, node);
                     }
                 }
                 else {
-                    // visited all children
+                    // visited all children, didn't find a solution under this node
                     stack.pop();
                     continue;
                 }
@@ -317,6 +322,7 @@ public class Shuffler {
         stack.push(root);
     }
 
+    // TODO: only push if valid
     private void addLeftNodeToNodeAndStack(String string0, Deque<NodeExtended> stack, NodeExtended node) {
         if ((string0 != null)
                 && (node.index0 < string0.length())) {
@@ -329,6 +335,7 @@ public class Shuffler {
         }
     }
 
+    // TODO: only push if valid
     private void addRightNodeToNodeAndStack(String string1, Deque<NodeExtended> stack, NodeExtended node) {
         if ((string1 != null)
                 && (node.index1 < string1.length())) {
