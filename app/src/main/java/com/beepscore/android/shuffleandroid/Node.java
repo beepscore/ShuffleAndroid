@@ -1,6 +1,7 @@
 package com.beepscore.android.shuffleandroid;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by stevebaker on 6/12/15.
@@ -9,26 +10,38 @@ public class Node {
 
     String value = null;
     ArrayList<Integer> indexes = null;
-    Node left = null;
-    Node right = null;
+    ArrayList<? extends Node> children = null;
 
-    public Node(String value, ArrayList<Integer> indexes, Node left, Node right) {
+    public Node(String value, ArrayList<Integer> indexes,
+                ArrayList<? extends Node> children) {
+
         this.value = value;
         this.indexes = indexes;
-        this.left = left;
-        this.right = right;
+
+        if (children == null) {
+            ArrayList<Node> childrenNull = new ArrayList<Node>();
+            childrenNull.add(null);
+            childrenNull.add(null);
+            this.children = childrenNull;
+        } else {
+            this.children = children;
+        }
     }
 
     public Node() {
-        this(null, null, null, null);
+        // call to this must be first statement in constructor
+        this(null, null, null);
+        ArrayList<Node> childrenNull = new ArrayList<Node>();
+        childrenNull.add(null);
+        childrenNull.add(null);
+        this.children = childrenNull;
     }
 
     @Override
     public String toString() {
         String description =  valueDescription(value) + ", "
                 + indexesDescription(indexes) + ", "
-                + leftDescription(left) + ", "
-                + rightDescription(right);
+                + childrenDescription(children);
         return description;
     }
 
@@ -43,7 +56,7 @@ public class Node {
     }
 
     protected String indexesDescription(ArrayList<Integer> indexes) {
-        String description = "";
+        String description = "indexes: ";
         if (indexes == null) {
             description = description.concat("null");
         } else {
@@ -52,12 +65,30 @@ public class Node {
         return description;
     }
 
-    protected String rightDescription(Node child) {
-        return childDescription("right", child);
-    }
+    protected String childrenDescription(ArrayList<? extends Node> children) {
+        String description = "children: ";
+        if (children == null) {
+            description = description.concat("null");
+        } else {
+            description = description + "[";
+            if ((children.get(0) == null)
+                || (children.get(0).value == null)) {
+                description = description + "null";
+            } else {
+                description = description + children.get(0).value;
+            }
 
-    protected String leftDescription(Node child) {
-        return childDescription("left", child);
+            description = description.concat(", ");
+
+            if ((children.get(1) == null)
+                    || (children.get(1).value == null)) {
+                description = description + "null";
+            } else {
+                description = description + children.get(1).value;
+            }
+            description = description.concat("]");
+        }
+        return description;
     }
 
     /**

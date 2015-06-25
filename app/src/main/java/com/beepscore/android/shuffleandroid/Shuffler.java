@@ -211,7 +211,7 @@ public class Shuffler {
         indexesBeforeSourceStart.add(INDEX_BEFORE_SOURCE_START);
 
         // root node has empty value and no letters from either source string
-        Node root = new Node("", indexesBeforeSourceStart, null, null);
+        Node root = new Node("", indexesBeforeSourceStart, null);
         queue.add(root);
     }
 
@@ -225,8 +225,9 @@ public class Shuffler {
             indexes.add(node.indexes.get(0) + 1);
             indexes.add(node.indexes.get(1));
 
-            node.left = new Node(nodeLeftValue, indexes, null, null);
-            queue.add(node.left);
+            Node nodeLeft = new Node(nodeLeftValue, indexes, null);
+            ((ArrayList<Node>)node.children).set(0, nodeLeft);
+            queue.add(nodeLeft);
         }
     }
 
@@ -240,8 +241,9 @@ public class Shuffler {
             indexes.add(node.indexes.get(0));
             indexes.add(node.indexes.get(1) + 1);
 
-            node.right = new Node(nodeRightValue, indexes, null, null);
-            queue.add(node.right);
+            Node nodeRight = new Node(nodeRightValue, indexes, null);
+            ((ArrayList<Node>)node.children).set(1, nodeRight);
+            queue.add(nodeRight);
         }
     }
 
@@ -331,9 +333,13 @@ public class Shuffler {
         indexesBeforeSourceStart.add(INDEX_BEFORE_SOURCE_START);
         indexesBeforeSourceStart.add(INDEX_BEFORE_SOURCE_START);
 
+        ArrayList<NodeExtended> childrenNull = new ArrayList<NodeExtended>();
+        childrenNull.add(null);
+        childrenNull.add(null);
+
         // root node has empty value and no letters from either source string
         NodeExtended root = new NodeExtended("", indexesBeforeSourceStart,
-                null, null, false, false);
+                childrenNull, false, false);
         stack.push(root);
     }
 
@@ -349,8 +355,8 @@ public class Shuffler {
             indexes.add(node.indexes.get(1));
 
             NodeExtended leftNode = new NodeExtended(leftNodeValue, indexes,
-                    null, null, false, false);
-            node.left = leftNode;
+                    null, false, false);
+            ((ArrayList<NodeExtended>)node.children).set(0, leftNode);
             stack.push(leftNode);
         }
     }
@@ -367,8 +373,8 @@ public class Shuffler {
             indexes.add(node.indexes.get(1) + 1);
 
             NodeExtended rightNode = new NodeExtended(rightNodeValue, indexes,
-                    null, null, false, false);
-            node.right = rightNode;
+                    null, false, false);
+            ((ArrayList<NodeExtended>)node.children).set(1, rightNode);
             stack.push(rightNode);
         }
     }

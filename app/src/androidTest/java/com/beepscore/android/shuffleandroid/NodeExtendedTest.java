@@ -2,6 +2,8 @@ package com.beepscore.android.shuffleandroid;
 
 import junit.framework.TestCase;
 
+import java.util.ArrayList;
+
 /**
  * Created by stevebaker on 6/24/15.
  */
@@ -13,15 +15,15 @@ public class NodeExtendedTest extends TestCase {
 
         assertNull(node.value);
         assertNull(node.indexes);
-        assertNull(node.left);
-        assertNull(node.right);
+        assertNull(node.children.get(0));
+        assertNull(node.children.get(1));
         assertNull(node.didVisitLeft);
         assertNull(node.didVisitRight);
     }
 
     public void testNodeExtendedToStringPropertiesNull() {
         NodeExtended node = new NodeExtended();
-        String expected = "null, null, left: null, right: null, null, null";
+        String expected = "null, indexes: null, children: [null, null], null, null";
         assertEquals(expected, node.toString());
     }
 
@@ -32,26 +34,26 @@ public class NodeExtendedTest extends TestCase {
         joe.value = testValue;
         assertEquals(testValue, joe.value);
 
-        String expectedDescription = "Joe, null, left: null, right: null, null, null";
+        String expectedDescription = "Joe, indexes: null, children: [null, null], null, null";
         assertEquals(expectedDescription, joe.toString());
 
         NodeExtended larry = new NodeExtended();
-        joe.left = larry;
+        ((ArrayList<NodeExtended>)joe.children).set(0, larry);
         larry.value = "Larry";
-        assertEquals(larry, joe.left);
+        assertEquals(larry, joe.children.get(0));
 
-        expectedDescription = "Joe, null, left.value: Larry, right: null, null, null";
+        expectedDescription = "Joe, indexes: null, children: [Larry, null], null, null";
         assertEquals(expectedDescription, joe.toString());
 
         NodeExtended rick = new NodeExtended();
-        joe.right = rick;
-        assertEquals(rick, joe.right);
+        ((ArrayList<NodeExtended>)joe.children).set(1, rick);
+        assertEquals(rick, joe.children.get(1));
 
-        expectedDescription = "Joe, null, left.value: Larry, right.value: null, null, null";
+        expectedDescription = "Joe, indexes: null, children: [Larry, null], null, null";
         assertEquals(expectedDescription, joe.toString());
 
         rick.value = "Rick";
-        expectedDescription = "Joe, null, left.value: Larry, right.value: Rick, null, null";
+        expectedDescription = "Joe, indexes: null, children: [Larry, Rick], null, null";
         assertEquals(expectedDescription, joe.toString());
     }
 
@@ -59,12 +61,15 @@ public class NodeExtendedTest extends TestCase {
         String value = "Joe";
         NodeExtended larry = new NodeExtended();
         NodeExtended rick = new NodeExtended();
-        NodeExtended joe = new NodeExtended(value, null, larry, rick, true, false);
+        ArrayList<NodeExtended> children = new ArrayList<NodeExtended>();
+        children.add(larry);
+        children.add(rick);
+        NodeExtended joe = new NodeExtended(value, null, children, true, false);
 
         assertNotNull(joe);
         assertEquals(value, joe.value);
-        assertEquals(larry, joe.left);
-        assertEquals(rick, joe.right);
+        assertEquals(larry, joe.children.get(0));
+        assertEquals(rick, joe.children.get(1));
         assertTrue(joe.didVisitLeft);
         assertFalse(joe.didVisitRight);
     }

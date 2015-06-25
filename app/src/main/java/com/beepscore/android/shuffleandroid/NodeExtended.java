@@ -10,16 +10,29 @@ public class NodeExtended extends Node {
     Boolean didVisitLeft = null;
     Boolean didVisitRight = null;
 
-    public NodeExtended(String value, ArrayList<Integer> indexes,
-                        NodeExtended left, NodeExtended right,
+    public NodeExtended(String value,
+                        ArrayList<Integer> indexes,
+                        ArrayList<NodeExtended> children,
                         Boolean didVisitLeft, Boolean didVisitRight) {
-        super(value, indexes, left, right);
+
+        super(value, indexes, children);
+
+        if (children == null) {
+            ArrayList<NodeExtended> childrenNull = new ArrayList<NodeExtended>();
+            childrenNull.add(null);
+            childrenNull.add(null);
+            this.children = childrenNull;
+        }
         this.didVisitLeft = didVisitLeft;
         this.didVisitRight = didVisitRight;
     }
 
     public NodeExtended() {
-        this(null, null, null, null, null, null);
+        this(null, null, null, null, null);
+        ArrayList<NodeExtended> childrenNull = new ArrayList<NodeExtended>();
+        childrenNull.add(null);
+        childrenNull.add(null);
+        this.children = childrenNull;
     }
 
     @Override

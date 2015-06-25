@@ -22,7 +22,7 @@ public class ShufflerTest extends TestCase {
         indexes.add(0);
         indexes.add(-1);
 
-        Node joe = new Node("a", indexes, null, null);
+        Node joe = new Node("a", indexes, null);
         assertFalse(shuffler.isLeafNode(joe, "a", "b"));
     }
 
