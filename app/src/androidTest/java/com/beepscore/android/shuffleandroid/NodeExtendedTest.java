@@ -14,7 +14,8 @@ public class NodeExtendedTest extends TestCase {
         assertNotNull(node);
 
         assertNull(node.value);
-        assertNull(node.indexes);
+        assertNull(node.indexes.get(0));
+        assertNull(node.indexes.get(1));
         assertNull(node.children.get(0));
         assertNull(node.children.get(1));
         assertNull(node.didVisitLeft);
@@ -23,7 +24,7 @@ public class NodeExtendedTest extends TestCase {
 
     public void testNodeExtendedToStringPropertiesNull() {
         NodeExtended node = new NodeExtended();
-        String expected = "null, indexes: null, children: [null, null], null, null";
+        String expected = "null, indexes: [null, null], children: [null, null], null, null";
         assertEquals(expected, node.toString());
     }
 
@@ -34,7 +35,7 @@ public class NodeExtendedTest extends TestCase {
         joe.value = testValue;
         assertEquals(testValue, joe.value);
 
-        String expectedDescription = "Joe, indexes: null, children: [null, null], null, null";
+        String expectedDescription = "Joe, indexes: [null, null], children: [null, null], null, null";
         assertEquals(expectedDescription, joe.toString());
 
         NodeExtended larry = new NodeExtended();
@@ -42,18 +43,18 @@ public class NodeExtendedTest extends TestCase {
         larry.value = "Larry";
         assertEquals(larry, joe.children.get(0));
 
-        expectedDescription = "Joe, indexes: null, children: [Larry, null], null, null";
+        expectedDescription = "Joe, indexes: [null, null], children: [Larry, null], null, null";
         assertEquals(expectedDescription, joe.toString());
 
         NodeExtended rick = new NodeExtended();
         ((ArrayList<NodeExtended>)joe.children).set(1, rick);
         assertEquals(rick, joe.children.get(1));
 
-        expectedDescription = "Joe, indexes: null, children: [Larry, null], null, null";
+        expectedDescription = "Joe, indexes: [null, null], children: [Larry, null], null, null";
         assertEquals(expectedDescription, joe.toString());
 
         rick.value = "Rick";
-        expectedDescription = "Joe, indexes: null, children: [Larry, Rick], null, null";
+        expectedDescription = "Joe, indexes: [null, null], children: [Larry, Rick], null, null";
         assertEquals(expectedDescription, joe.toString());
     }
 

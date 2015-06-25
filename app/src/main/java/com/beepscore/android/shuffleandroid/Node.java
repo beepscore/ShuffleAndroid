@@ -16,7 +16,15 @@ public class Node {
                 ArrayList<? extends Node> children) {
 
         this.value = value;
-        this.indexes = indexes;
+
+        if (indexes == null) {
+            ArrayList<Integer> indexesNull = new ArrayList<Integer>();
+            indexesNull.add(null);
+            indexesNull.add(null);
+            this.indexes = indexesNull;
+        } else {
+            this.indexes = indexes;
+        }
 
         if (children == null) {
             ArrayList<Node> childrenNull = new ArrayList<Node>();
@@ -31,10 +39,6 @@ public class Node {
     public Node() {
         // call to this must be first statement in constructor
         this(null, null, null);
-        ArrayList<Node> childrenNull = new ArrayList<Node>();
-        childrenNull.add(null);
-        childrenNull.add(null);
-        this.children = childrenNull;
     }
 
     @Override

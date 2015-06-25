@@ -14,14 +14,15 @@ public class NodeTest extends TestCase {
         assertNotNull(node);
 
         assertNull(node.value);
-        assertNull(node.indexes);
+        assertNull(node.indexes.get(0));
+        assertNull(node.indexes.get(1));
         assertNull(node.children.get(0));
         assertNull(node.children.get(1));
     }
 
     public void testNodeToStringPropertiesNull() {
         Node node = new Node();
-        String expected = "null, indexes: null, children: [null, null]";
+        String expected = "null, indexes: [null, null], children: [null, null]";
         assertEquals(expected, node.toString());
     }
 
@@ -32,7 +33,7 @@ public class NodeTest extends TestCase {
         joe.value = testValue;
         assertEquals(testValue, joe.value);
 
-        String expectedDescription = "Joe, indexes: null, children: [null, null]";
+        String expectedDescription = "Joe, indexes: [null, null], children: [null, null]";
         assertEquals(expectedDescription, joe.toString());
 
         Node larry = new Node();
@@ -40,18 +41,18 @@ public class NodeTest extends TestCase {
         larry.value = "Larry";
         assertEquals(larry, joe.children.get(0));
 
-        expectedDescription = "Joe, indexes: null, children: [Larry, null]";
+        expectedDescription = "Joe, indexes: [null, null], children: [Larry, null]";
         assertEquals(expectedDescription, joe.toString());
 
         Node rick = new Node();
         ((ArrayList<Node>)joe.children).set(1, rick);
         assertEquals(rick, joe.children.get(1));
 
-        expectedDescription = "Joe, indexes: null, children: [Larry, null]";
+        expectedDescription = "Joe, indexes: [null, null], children: [Larry, null]";
         assertEquals(expectedDescription, joe.toString());
 
         rick.value = "Rick";
-        expectedDescription = "Joe, indexes: null, children: [Larry, Rick]";
+        expectedDescription = "Joe, indexes: [null, null], children: [Larry, Rick]";
         assertEquals(expectedDescription, joe.toString());
     }
 
