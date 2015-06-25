@@ -1,11 +1,10 @@
 package com.beepscore.android.shuffleandroid;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Deque;
 
 /**
  * Created by stevebaker on 6/12/15.
@@ -15,7 +14,7 @@ public class Shuffler {
     /** Use more general interface List instead of restricting to type ArrayList
      * http://stackoverflow.com/questions/2279030/type-list-vs-type-arraylist-in-java#2279059
      */
-    public List<String> nodesSearched = new ArrayList<String>();
+    public List<String> nodesSearched = null;
 
     private boolean isNodeValueEqualToValue(Node node, String value) {
         if ((value == null) && (node.value == null)) {
@@ -148,6 +147,8 @@ public class Shuffler {
         }
     }
 
+    //==========================================================================
+
     /**
      * Traverses binary tree breadth first.
      * Uses a queue instead of recursion to reduce risk of call stack overflow.
@@ -164,6 +165,8 @@ public class Shuffler {
             // isValidShuffleForEdgeCases() was able to determine if shuffle is valid
             return edgeCaseResult;
         }
+
+        nodesSearched = new ArrayList<String>();
 
         // LinkedList implements fifo Queue, Dequeue
         // http://stackoverflow.com/questions/12179887/android-queue-vs-stack
@@ -227,6 +230,114 @@ public class Shuffler {
             String nodeRightValue = node.value.concat(string1AtIndex);
             node.right = new Node(nodeRightValue, node.index0, node.index1 + 1, null, null);
             queue.add(node.right);
+        }
+    }
+
+    //==========================================================================
+
+    /**
+     * Traverses binary tree depth first.
+     * Uses a stack instead of recursion to reduce risk of call stack overflow.
+     * @param shuffledString a potential shuffle of string0 and string1
+     * @param string0 a source string
+     * @param string1 a source string
+     * @return true if shuffledString is a valid shuffle of string0 and string1
+     * http://www.cis.upenn.edu/~matuszek/cit594-2012/Pages/backtracking.html
+     */
+    public boolean isValidShuffleDepthFirst(String shuffledString,
+                                            String string0, String string1) {
+
+        Boolean edgeCaseResult = isValidShuffleForEdgeCases(shuffledString, string0, string1);
+        if (edgeCaseResult != null) {
+            // isValidShuffleForEdgeCases() was able to determine if shuffle is valid
+            return edgeCaseResult;
+        }
+
+        nodesSearched = new ArrayList<String>();
+
+        // LinkedList class implements Deque interface for lifo stack
+        // http://docs.oracle.com/javase/7/docs/api/java/util/Deque.html
+        // http://docs.oracle.com/javase/7/docs/api/java/util/Stack.html
+        // http://stackoverflow.com/questions/12179887/android-stack-vs-stack
+        Deque<NodeExtended> stack = new LinkedList<NodeExtended>();
+
+        addRootNodeToStack(stack);
+
+        while (!stack.isEmpty()) {
+
+            NodeExtended node = stack.peek();
+            this.nodesSearched.add(node.value);
+
+            String shuffledStringStart = shuffledString.substring(0, node.value.length());
+            if (!isNodeValueEqualToValue(node, shuffledStringStart)) {
+                // this node is not a valid candidate, so discard it
+                stack.pop();
+                continue;
+            }
+
+            if (isLeafNode(node, string0, string1)) {
+                if (isASolution(node, shuffledString, string0, string1)) {
+                    return true;
+                } else {
+                    stack.pop();
+                    continue;
+                }
+            }
+
+            else {
+                if (node.hasUnvisitedChildren()) {
+                    if (!node.didVisitLeft) {
+                        addLeftNodeToNodeAndStack(string0, stack, node);
+                        node.didVisitLeft = true;
+                    }
+                    else if (!node.didVisitRight) {
+                        addRightNodeToNodeAndStack(string1, stack, node);
+                        node.didVisitRight = true;
+                    }
+                }
+                else {
+                    // visited all children
+                    stack.pop();
+                    continue;
+                }
+            }
+        }
+        // didn't find a solution
+        return false;
+    }
+
+    private void addRootNodeToStack(Deque<NodeExtended> stack) {
+        // this index value signifies node has no letters from that source
+        // e.g. if node.index0 == -1, node.value contains no letters from string0
+        final int INDEX_BEFORE_SOURCE_START = -1;
+
+        // root node has empty value and no letters from either source string
+        NodeExtended root = new NodeExtended("", INDEX_BEFORE_SOURCE_START, INDEX_BEFORE_SOURCE_START,
+                null, null, false, false);
+        stack.push(root);
+    }
+
+    private void addLeftNodeToNodeAndStack(String string0, Deque<NodeExtended> stack, NodeExtended node) {
+        if ((string0 != null)
+                && (node.index0 < string0.length())) {
+            String string0AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string0, node.index0 + 1);
+            String leftNodeValue = node.value.concat(string0AtIndex);
+            NodeExtended leftNode = new NodeExtended(leftNodeValue,
+                    node.index0 + 1, node.index1, null, null, false, false);
+            node.left = leftNode;
+            stack.push(leftNode);
+        }
+    }
+
+    private void addRightNodeToNodeAndStack(String string1, Deque<NodeExtended> stack, NodeExtended node) {
+        if ((string1 != null)
+                && (node.index1 < string1.length())) {
+            String string1AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string1, node.index1 + 1);
+            String rightNodeValue = node.value.concat(string1AtIndex);
+            NodeExtended rightNode = new NodeExtended(rightNodeValue,
+                    node.index0, node.index1 + 1, null, null, false, false);
+            node.right = rightNode;
+            stack.push(rightNode);
         }
     }
 

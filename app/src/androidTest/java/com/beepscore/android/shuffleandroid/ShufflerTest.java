@@ -142,4 +142,42 @@ public class ShufflerTest extends TestCase {
         assertFalse(shuffler.isValidShuffle("公告本公司董事會通過104年第一季合併",
                 "公司0合", "會告本公董事通過14年第一季併"));
     }
+
+    //==========================================================================
+
+    public void testIsValidShuffleDepthFirst() {
+        Shuffler shuffler = new Shuffler();
+
+        assertTrue(shuffler.isValidShuffleDepthFirst("ab", "a", "b"));
+        assertTrue(shuffler.isValidShuffleDepthFirst("dabecf", "abc", "def"));
+        assertTrue(shuffler.isValidShuffleDepthFirst("abcdefghijkl", "abcghi", "defjkl"));
+
+        assertFalse(shuffler.isValidShuffleDepthFirst("abcdefghijkl", "abchgi", "defjkl"));
+    }
+
+    public void testIsValidShuffleDepthFirstLettersInCommon() {
+        Shuffler shuffler = new Shuffler();
+
+        // string0 and string1 contain letters in common
+        assertTrue(shuffler.isValidShuffleDepthFirst("abca", "ac", "ba"));
+        assertTrue(shuffler.isValidShuffleDepthFirst("acbbca", "abc", "cba"));
+        assertTrue(shuffler.isValidShuffleDepthFirst("abaabza", "aba", "abza"));
+        assertTrue(shuffler.isValidShuffleDepthFirst("This is a great day indeed!",
+                "T reayde", "hisis a gt da ined!"));
+
+        // expect false because strings are case sensitive
+        assertFalse(shuffler.isValidShuffleDepthFirst("This is a great day indeed!",
+                "t reayde", "hisis a gt da ined!"));
+    }
+
+    public void testIsValidShuffleDepthFirstUTF8() {
+        Shuffler shuffler = new Shuffler();
+
+        // Chinese from http://www.foxconn.com/index.html
+        assertTrue(shuffler.isValidShuffleDepthFirst("公告本公司董事會通過104年第一季合併",
+                "公司會0合", "告本公董事通過14年第一季併"));
+
+        assertFalse(shuffler.isValidShuffleDepthFirst("公告本公司董事會通過104年第一季合併",
+                "公司0合", "會告本公董事通過14年第一季併"));
+    }
 }
