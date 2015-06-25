@@ -3,6 +3,8 @@ package com.beepscore.android.shuffleandroid;
 
 import junit.framework.TestCase;
 
+import java.util.ArrayList;
+
 /**
  * Created by stevebaker on 6/12/15.
  */
@@ -16,7 +18,11 @@ public class ShufflerTest extends TestCase {
     public void testIsLeafNode() {
         Shuffler shuffler = new Shuffler();
 
-        Node joe = new Node("a", 0, -1, null, null);
+        ArrayList<Integer> indexes = new ArrayList<Integer>();
+        indexes.add(0);
+        indexes.add(-1);
+
+        Node joe = new Node("a", indexes, null, null);
         assertFalse(shuffler.isLeafNode(joe, "a", "b"));
     }
 

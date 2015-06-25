@@ -80,7 +80,7 @@ public class Shuffler {
         if (StringUtils.isStringNullOrEmpty(string)) {
             return true;
         }
-        if (node.index0 == string.length() - 1) {
+        if (node.indexes.get(0) == string.length() - 1) {
             return true;
         } else {
             return false;
@@ -91,7 +91,7 @@ public class Shuffler {
         if (StringUtils.isStringNullOrEmpty(string)) {
             return true;
         }
-        if (node.index1 == string.length() - 1) {
+        if (node.indexes.get(1) == string.length() - 1) {
             return true;
         } else {
             return false;
@@ -103,7 +103,7 @@ public class Shuffler {
      * @param node may not be null.
      * @param string0 may be null or empty "".
      * @param string1 may be null or empty "".
-     * @return true if node index0 and index1 are at end of string0 and string1
+     * @return true if node indexes.get(0) and indexes.get(1) are at end of string0 and string1
      */
     protected boolean isLeafNode(Node node, String string0, String string1) {
 
@@ -113,7 +113,7 @@ public class Shuffler {
         }
 
         if (StringUtils.isStringNullOrEmpty(string0)) {
-            if (node.index1 == string1.length() - 1) {
+            if (node.indexes.get(1) == string1.length() - 1) {
                 return true;
             } else {
                 return false;
@@ -121,7 +121,7 @@ public class Shuffler {
         }
 
         if (StringUtils.isStringNullOrEmpty(string1)) {
-            if (node.index0 == string0.length() - 1) {
+            if (node.indexes.get(0) == string0.length() - 1) {
                 return true;
             } else {
                 return false;
@@ -203,32 +203,44 @@ public class Shuffler {
     }
 
     private void addRootNodeToQueue(Queue<Node> queue) {
-        // this index value signifies node has no letters from that source
-        // e.g. if node.index0 == -1, node.value contains no letters from string0
-        final int INDEX_BEFORE_SOURCE_START = -1;
+        // index values signifies node has no letters from that source string
+        // e.g. if node.indexes.get(0) == -1, node.value contains no letters from string0
+        final Integer INDEX_BEFORE_SOURCE_START = -1;
+        ArrayList<Integer>indexesBeforeSourceStart = new ArrayList<Integer>();
+        indexesBeforeSourceStart.add(INDEX_BEFORE_SOURCE_START);
+        indexesBeforeSourceStart.add(INDEX_BEFORE_SOURCE_START);
 
         // root node has empty value and no letters from either source string
-        Node root = new Node("", INDEX_BEFORE_SOURCE_START, INDEX_BEFORE_SOURCE_START,
-                null, null);
+        Node root = new Node("", indexesBeforeSourceStart, null, null);
         queue.add(root);
     }
 
     private void addLeftNodeToNodeAndQueue(String string0, Queue<Node> queue, Node node) {
         if ((string0 != null)
-                && (node.index0 < string0.length())) {
-            String string0AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string0, node.index0 + 1);
+                && (node.indexes.get(0) < string0.length())) {
+            String string0AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string0, node.indexes.get(0) + 1);
             String nodeLeftValue = node.value.concat(string0AtIndex);
-            node.left = new Node(nodeLeftValue, node.index0 + 1, node.index1, null, null);
+
+            ArrayList<Integer>indexes = new ArrayList<Integer>();
+            indexes.add(node.indexes.get(0) + 1);
+            indexes.add(node.indexes.get(1));
+
+            node.left = new Node(nodeLeftValue, indexes, null, null);
             queue.add(node.left);
         }
     }
 
     private void addRightNodeToNodeAndQueue(String string1, Queue<Node> queue, Node node) {
         if ((string1 != null)
-                && (node.index1 < string1.length())) {
-            String string1AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string1, node.index1 + 1);
+                && (node.indexes.get(1) < string1.length())) {
+            String string1AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string1, node.indexes.get(1) + 1);
             String nodeRightValue = node.value.concat(string1AtIndex);
-            node.right = new Node(nodeRightValue, node.index0, node.index1 + 1, null, null);
+
+            ArrayList<Integer>indexes = new ArrayList<Integer>();
+            indexes.add(node.indexes.get(0));
+            indexes.add(node.indexes.get(1) + 1);
+
+            node.right = new Node(nodeRightValue, indexes, null, null);
             queue.add(node.right);
         }
     }
@@ -313,11 +325,14 @@ public class Shuffler {
 
     private void addRootNodeToStack(Deque<NodeExtended> stack) {
         // this index value signifies node has no letters from that source
-        // e.g. if node.index0 == -1, node.value contains no letters from string0
-        final int INDEX_BEFORE_SOURCE_START = -1;
+        // e.g. if node.indexes.get(0) == -1, node.value contains no letters from string0
+        final Integer INDEX_BEFORE_SOURCE_START = -1;
+        ArrayList<Integer>indexesBeforeSourceStart = new ArrayList<Integer>();
+        indexesBeforeSourceStart.add(INDEX_BEFORE_SOURCE_START);
+        indexesBeforeSourceStart.add(INDEX_BEFORE_SOURCE_START);
 
         // root node has empty value and no letters from either source string
-        NodeExtended root = new NodeExtended("", INDEX_BEFORE_SOURCE_START, INDEX_BEFORE_SOURCE_START,
+        NodeExtended root = new NodeExtended("", indexesBeforeSourceStart,
                 null, null, false, false);
         stack.push(root);
     }
@@ -325,11 +340,16 @@ public class Shuffler {
     // TODO: only push if valid
     private void addLeftNodeToNodeAndStack(String string0, Deque<NodeExtended> stack, NodeExtended node) {
         if ((string0 != null)
-                && (node.index0 < string0.length())) {
-            String string0AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string0, node.index0 + 1);
+                && (node.indexes.get(0) < string0.length())) {
+            String string0AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string0, node.indexes.get(0) + 1);
             String leftNodeValue = node.value.concat(string0AtIndex);
-            NodeExtended leftNode = new NodeExtended(leftNodeValue,
-                    node.index0 + 1, node.index1, null, null, false, false);
+
+            ArrayList<Integer>indexes = new ArrayList<Integer>();
+            indexes.add(node.indexes.get(0) + 1);
+            indexes.add(node.indexes.get(1));
+
+            NodeExtended leftNode = new NodeExtended(leftNodeValue, indexes,
+                    null, null, false, false);
             node.left = leftNode;
             stack.push(leftNode);
         }
@@ -338,11 +358,16 @@ public class Shuffler {
     // TODO: only push if valid
     private void addRightNodeToNodeAndStack(String string1, Deque<NodeExtended> stack, NodeExtended node) {
         if ((string1 != null)
-                && (node.index1 < string1.length())) {
-            String string1AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string1, node.index1 + 1);
+                && (node.indexes.get(1) < string1.length())) {
+            String string1AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string1, node.indexes.get(1) + 1);
             String rightNodeValue = node.value.concat(string1AtIndex);
-            NodeExtended rightNode = new NodeExtended(rightNodeValue,
-                    node.index0, node.index1 + 1, null, null, false, false);
+
+            ArrayList<Integer>indexes = new ArrayList<Integer>();
+            indexes.add(node.indexes.get(0));
+            indexes.add(node.indexes.get(1) + 1);
+
+            NodeExtended rightNode = new NodeExtended(rightNodeValue, indexes,
+                    null, null, false, false);
             node.right = rightNode;
             stack.push(rightNode);
         }

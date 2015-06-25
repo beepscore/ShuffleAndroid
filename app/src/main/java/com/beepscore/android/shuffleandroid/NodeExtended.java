@@ -1,5 +1,7 @@
 package com.beepscore.android.shuffleandroid;
 
+import java.util.ArrayList;
+
 /**
  * Created by stevebaker on 6/24/15.
  */
@@ -8,16 +10,16 @@ public class NodeExtended extends Node {
     Boolean didVisitLeft = null;
     Boolean didVisitRight = null;
 
-    public NodeExtended(String value, Integer index0, Integer index1,
+    public NodeExtended(String value, ArrayList<Integer> indexes,
                         NodeExtended left, NodeExtended right,
                         Boolean didVisitLeft, Boolean didVisitRight) {
-        super(value, index0, index1, left, right);
+        super(value, indexes, left, right);
         this.didVisitLeft = didVisitLeft;
         this.didVisitRight = didVisitRight;
     }
 
     public NodeExtended() {
-        this(null, null, null, null, null, null, null);
+        this(null, null, null, null, null, null);
     }
 
     @Override
