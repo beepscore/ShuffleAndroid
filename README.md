@@ -79,3 +79,19 @@ This approach is very "brute force" and likely impractical.
 
 ## Tests
 See tests for implemented behavior.
+
+## Feature branch nodearray
+TODO: Refactor child nodes left, right into an array childNodes.get(index).
+Refactor corresponding strings 0, 1 into an array sourceStrings.get(index).
+This will make it easier to eliminate some repeated code such as
+addLeftNodeToNodeAndStack, addRightNodeToNodeAndStack to
+addChildNodeAtIndexToNodeAndStack.
+
+### Side benefit #1
+After refactor, I may implement push node onto stack only if valid.
+With node array, would only need to do this in one place instead of two.
+This way the stack would only contain possibly good nodes.
+As soon as we determine a node isn't valid, pop it from stack.
+
+### Side benefit #2
+Would make it easier to extend to > 2 child nodes.
