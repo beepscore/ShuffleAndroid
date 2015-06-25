@@ -304,7 +304,12 @@ public class Shuffler {
             }
 
             else {
-                if (node.hasUnvisitedChildren()) {
+                if (node.didVisitAllChildren()) {
+                    // didn't find a solution under this node
+                    stack.pop();
+                    continue;
+                }
+                else {
                     if (!node.didVisitLeft) {
                         node.didVisitLeft = true;
                         addLeftNodeToNodeAndStack(string0, stack, node);
@@ -313,11 +318,6 @@ public class Shuffler {
                         node.didVisitRight = true;
                         addRightNodeToNodeAndStack(string1, stack, node);
                     }
-                }
-                else {
-                    // visited all children, didn't find a solution under this node
-                    stack.pop();
-                    continue;
                 }
             }
         }

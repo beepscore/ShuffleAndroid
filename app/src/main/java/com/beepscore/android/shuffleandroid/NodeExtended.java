@@ -65,8 +65,8 @@ public class NodeExtended extends Node {
         return description;
     }
 
-    public Boolean hasUnvisitedChildren() {
-        if (!didVisitLeft || !didVisitRight) {
+    public Boolean didVisitAllChildren() {
+        if (didVisitLeft && didVisitRight) {
             return true;
         } else {
             return false;
