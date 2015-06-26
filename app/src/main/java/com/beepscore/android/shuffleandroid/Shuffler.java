@@ -191,8 +191,8 @@ public class Shuffler {
             String shuffledStringStart = shuffledString.substring(0, node.value.length());
             if (isNodeValueEqualToValue(node, shuffledStringStart)) {
                 // path to this node is a valid candidate, so add sub-branches
-                addLeftNodeToNodeAndQueue(sourceStrings.get(0), queue, node);
-                addRightNodeToNodeAndQueue(sourceStrings.get(1), queue, node);
+                addChildNodeAtIndexToNodeAndQueue(sourceStrings, 0, node, queue);
+                addChildNodeAtIndexToNodeAndQueue(sourceStrings, 1, node, queue);
             }
         }
 
@@ -213,35 +213,39 @@ public class Shuffler {
         queue.add(root);
     }
 
-    private void addLeftNodeToNodeAndQueue(String string0, Queue<Node> queue, Node node) {
-        if ((string0 != null)
-                && (node.indexes.get(0) < string0.length())) {
-            String string0AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string0, node.indexes.get(0) + 1);
-            String nodeLeftValue = node.value.concat(string0AtIndex);
-
-            ArrayList<Integer>indexes = new ArrayList<Integer>();
-            indexes.add(node.indexes.get(0) + 1);
-            indexes.add(node.indexes.get(1));
-
-            Node nodeLeft = new Node(nodeLeftValue, indexes, null);
-            ((ArrayList<Node>)node.children).set(0, nodeLeft);
-            queue.add(nodeLeft);
+    /**
+     * @param sourceStrings
+     * @param childIndex 0 to add left child, 1 to add right child
+     * @param queue
+     * @param node Node that child node will be added to
+     */
+    private void addChildNodeAtIndexToNodeAndQueue(ArrayList<String>sourceStrings,
+                                                   Integer childIndex,
+                                                   Node node, Queue<Node> queue) {
+        Integer otherChildIndex = 0;
+        if (childIndex == 0) {
+            otherChildIndex = 1;
         }
-    }
 
-    private void addRightNodeToNodeAndQueue(String string1, Queue<Node> queue, Node node) {
-        if ((string1 != null)
-                && (node.indexes.get(1) < string1.length())) {
-            String string1AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string1, node.indexes.get(1) + 1);
-            String nodeRightValue = node.value.concat(string1AtIndex);
+        if ((sourceStrings.get(childIndex) != null)
+                && (node.indexes.get(childIndex) < sourceStrings.get(childIndex).length())) {
+            String childStringAtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(sourceStrings.get(childIndex),
+                    node.indexes.get(childIndex) + 1);
+            String childNodeValue = node.value.concat(childStringAtIndex);
 
-            ArrayList<Integer>indexes = new ArrayList<Integer>();
-            indexes.add(node.indexes.get(0));
-            indexes.add(node.indexes.get(1) + 1);
+            ArrayList<Integer>childNodeIndexes = new ArrayList<Integer>();
+            if (childIndex == 0) {
+                childNodeIndexes.add(node.indexes.get(childIndex) + 1);
+                childNodeIndexes.add(node.indexes.get(otherChildIndex));
+            }
+            else {
+                childNodeIndexes.add(node.indexes.get(otherChildIndex));
+                childNodeIndexes.add(node.indexes.get(childIndex) + 1);
+            }
 
-            Node nodeRight = new Node(nodeRightValue, indexes, null);
-            ((ArrayList<Node>)node.children).set(1, nodeRight);
-            queue.add(nodeRight);
+            Node childNode = new Node(childNodeValue, childNodeIndexes, null);
+            ((ArrayList<Node>)node.children).set(childIndex, childNode);
+            queue.add(childNode);
         }
     }
 
