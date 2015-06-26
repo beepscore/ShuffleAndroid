@@ -34,16 +34,15 @@ public class Shuffler {
      * Checks several edge cases such as arguments null or empty strings
      * Uses Boolean (true, false, null) instead of boolean (true, false)
      * @param shuffledString
-     * @param string0
-     * @param string1
-     * @return true if shuffledString is a valid shuffle of string0 and string1.
-     * return false if shuffledString is not a valid shuffle of string0 and string1.
-     * return null if method can't tell if shuffledString is a valid shuffle of string0 and string1.
+     * @param sourceStrings an array. Count == 2.
+     * @return true if shuffledString is a valid shuffle of source strings.
+     * return false if shuffledString is not a valid shuffle of source strings.
+     * return null if method can't tell if shuffledString is a valid shuffle of source strings.
      */
-    protected Boolean isValidShuffleForEdgeCases(String shuffledString, String string0, String string1) {
+    protected Boolean isValidShuffleForEdgeCases(String shuffledString, ArrayList<String>sourceStrings) {
 
         if (shuffledString == null) {
-            if ((string0 == null) && (string1 == null)) {
+            if ((sourceStrings.get(0) == null) && (sourceStrings.get(1) == null)) {
                 return true;
             } else {
                 return false;
@@ -51,7 +50,7 @@ public class Shuffler {
         }
 
         if ("".equals(shuffledString)) {
-            if (("".equals(string0)) && ("".equals(string1))) {
+            if (("".equals(sourceStrings.get(0))) && ("".equals(sourceStrings.get(1)))) {
                 return true;
             } else {
                 return false;
@@ -59,18 +58,18 @@ public class Shuffler {
         }
 
         if ((shuffledString != null)
-                && StringUtils.isStringNullOrEmpty(string0)
-                && StringUtils.isStringNullOrEmpty(string1)) {
+                && StringUtils.isStringNullOrEmpty(sourceStrings.get(0))
+                && StringUtils.isStringNullOrEmpty(sourceStrings.get(1))) {
             return false;
         }
 
-        if (StringUtils.isStringNullOrEmpty(string0)
-                && shuffledString.equals(string1)) {
+        if (StringUtils.isStringNullOrEmpty(sourceStrings.get(0))
+                && shuffledString.equals(sourceStrings.get(1))) {
             return true;
         }
 
-        if (StringUtils.isStringNullOrEmpty(string1)
-                && shuffledString.equals(string0)) {
+        if (StringUtils.isStringNullOrEmpty(sourceStrings.get(1))
+                && shuffledString.equals(sourceStrings.get(0))) {
             return true;
         }
         return null;
@@ -101,27 +100,27 @@ public class Shuffler {
     /**
      *
      * @param node may not be null.
-     * @param string0 may be null or empty "".
-     * @param string1 may be null or empty "".
-     * @return true if node indexes.get(0) and indexes.get(1) are at end of string0 and string1
+     * @param sourceStrings Each element may be null or empty "".
+     * @return true if node indexes.get(0) and indexes.get(1) are at end of
+     * sourceString.get(0) and sourceString.get(1)
      */
-    protected boolean isLeafNode(Node node, String string0, String string1) {
+    protected boolean isLeafNode(Node node, ArrayList<String>sourceStrings) {
 
-        if (StringUtils.isStringNullOrEmpty(string0)
-                && StringUtils.isStringNullOrEmpty(string1)) {
+        if (StringUtils.isStringNullOrEmpty(sourceStrings.get(0))
+                && StringUtils.isStringNullOrEmpty(sourceStrings.get(1))) {
             return true;
         }
 
-        if (StringUtils.isStringNullOrEmpty(string0)) {
-            if (node.indexes.get(1) == string1.length() - 1) {
+        if (StringUtils.isStringNullOrEmpty(sourceStrings.get(0))) {
+            if (node.indexes.get(1) == sourceStrings.get(1).length() - 1) {
                 return true;
             } else {
                 return false;
             }
         }
 
-        if (StringUtils.isStringNullOrEmpty(string1)) {
-            if (node.indexes.get(0) == string0.length() - 1) {
+        if (StringUtils.isStringNullOrEmpty(sourceStrings.get(1))) {
+            if (node.indexes.get(0) == sourceStrings.get(0).length() - 1) {
                 return true;
             } else {
                 return false;
@@ -130,16 +129,16 @@ public class Shuffler {
 
         // string0 and string1 are non-empty
 
-        if (isNodeIndex0AtEndOfString(node, string0)
-                && isNodeIndex1AtEndOfString(node, string1)) {
+        if (isNodeIndex0AtEndOfString(node, sourceStrings.get(0))
+                && isNodeIndex1AtEndOfString(node, sourceStrings.get(1))) {
             return true;
         } else {
             return false;
         }
     }
 
-    protected boolean isASolution(Node node, String shuffledString, String string0, String string1) {
-        if (isLeafNode(node, string0, string1)
+    protected boolean isASolution(Node node, String shuffledString, ArrayList<String>sourceStrings) {
+        if (isLeafNode(node, sourceStrings)
                 && isNodeValueEqualToValue(node, shuffledString)) {
             return true;
         } else {
@@ -152,15 +151,14 @@ public class Shuffler {
     /**
      * Traverses binary tree breadth first.
      * Uses a queue instead of recursion to reduce risk of call stack overflow.
-     * @param shuffledString a potential shuffle of string0 and string1
-     * @param string0 a source string
-     * @param string1 a source string
-     * @return true if shuffledString is a valid shuffle of string0 and string1
+     * @param shuffledString a potential shuffle of source strings
+     * @param sourceStrings an array of source strings. Currently assumes count = 2
+     * @return true if shuffledString is a valid shuffle of source strings.
      */
     public boolean isValidShuffle(String shuffledString,
-                                  String string0, String string1) {
+                                  ArrayList<String>sourceStrings) {
 
-        Boolean edgeCaseResult = isValidShuffleForEdgeCases(shuffledString, string0, string1);
+        Boolean edgeCaseResult = isValidShuffleForEdgeCases(shuffledString, sourceStrings);
         if (edgeCaseResult != null) {
             // isValidShuffleForEdgeCases() was able to determine if shuffle is valid
             return edgeCaseResult;
@@ -180,9 +178,9 @@ public class Shuffler {
             //Log.d("breadth-first", node.toString());
             this.nodesSearched.add(node.value);
 
-            if (isLeafNode(node, string0, string1)) {
+            if (isLeafNode(node, sourceStrings)) {
                 // node is a terminal node
-                if (isASolution(node, shuffledString, string0, string1)) {
+                if (isASolution(node, shuffledString, sourceStrings)) {
                     return true;
                 } else {
                     // skip to next iteration, next node in queue
@@ -193,8 +191,8 @@ public class Shuffler {
             String shuffledStringStart = shuffledString.substring(0, node.value.length());
             if (isNodeValueEqualToValue(node, shuffledStringStart)) {
                 // path to this node is a valid candidate, so add sub-branches
-                addLeftNodeToNodeAndQueue(string0, queue, node);
-                addRightNodeToNodeAndQueue(string1, queue, node);
+                addLeftNodeToNodeAndQueue(sourceStrings.get(0), queue, node);
+                addRightNodeToNodeAndQueue(sourceStrings.get(1), queue, node);
             }
         }
 
@@ -253,15 +251,14 @@ public class Shuffler {
      * Traverses binary tree depth first.
      * Uses a stack instead of recursion to reduce risk of call stack overflow.
      * @param shuffledString a potential shuffle of string0 and string1
-     * @param string0 a source string
-     * @param string1 a source string
-     * @return true if shuffledString is a valid shuffle of string0 and string1
+     * @param sourceStrings an array of source strings. Currently assumes count = 2
+     * @return true if shuffledString is a valid shuffle of source strings
      * http://www.cis.upenn.edu/~matuszek/cit594-2012/Pages/backtracking.html
      */
     public boolean isValidShuffleDepthFirst(String shuffledString,
-                                            String string0, String string1) {
+                                            ArrayList<String>sourceStrings) {
 
-        Boolean edgeCaseResult = isValidShuffleForEdgeCases(shuffledString, string0, string1);
+        Boolean edgeCaseResult = isValidShuffleForEdgeCases(shuffledString, sourceStrings);
         if (edgeCaseResult != null) {
             // isValidShuffleForEdgeCases() was able to determine if shuffle is valid
             return edgeCaseResult;
@@ -294,8 +291,8 @@ public class Shuffler {
             ////////////////////////
 
 
-            if (isLeafNode(node, string0, string1)) {
-                if (isASolution(node, shuffledString, string0, string1)) {
+            if (isLeafNode(node, sourceStrings)) {
+                if (isASolution(node, shuffledString, sourceStrings)) {
                     return true;
                 } else {
                     stack.pop();
@@ -312,11 +309,11 @@ public class Shuffler {
                 else {
                     if (!node.didVisitLeft) {
                         node.didVisitLeft = true;
-                        addLeftNodeToNodeAndStack(string0, stack, node);
+                        addLeftNodeToNodeAndStack(sourceStrings.get(0), stack, node);
                     }
                     else if (!node.didVisitRight) {
                         node.didVisitRight = true;
-                        addRightNodeToNodeAndStack(string1, stack, node);
+                        addRightNodeToNodeAndStack(sourceStrings.get(1), stack, node);
                     }
                 }
             }

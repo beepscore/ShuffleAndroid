@@ -15,6 +15,13 @@ public class ShufflerTest extends TestCase {
         super.setUp();
     }
 
+    public ArrayList<String>sourceStringsFromStrings(String string0, String string1) {
+        ArrayList<String>strings = new ArrayList<>();
+        strings.add(string0);
+        strings.add(string1);
+        return strings;
+    }
+
     public void testIsLeafNode() {
         Shuffler shuffler = new Shuffler();
 
@@ -23,7 +30,8 @@ public class ShufflerTest extends TestCase {
         indexes.add(-1);
 
         Node joe = new Node("a", indexes, null);
-        assertFalse(shuffler.isLeafNode(joe, "a", "b"));
+
+        assertFalse(shuffler.isLeafNode(joe, sourceStringsFromStrings("a", "b")));
     }
 
     //==========================================================================
@@ -31,43 +39,42 @@ public class ShufflerTest extends TestCase {
     public void testIsValidShuffleForEdgeCasesShuffledStringNull() {
         Shuffler shuffler = new Shuffler();
 
-        assertTrue(shuffler.isValidShuffleForEdgeCases(null, null, null));
+        assertTrue(shuffler.isValidShuffleForEdgeCases(null, sourceStringsFromStrings(null, null)));
 
-        assertFalse(shuffler.isValidShuffleForEdgeCases(null, "a", null));
-        assertFalse(shuffler.isValidShuffleForEdgeCases(null, null, "b"));
-        assertFalse(shuffler.isValidShuffleForEdgeCases(null, "a", "b"));
+        assertFalse(shuffler.isValidShuffleForEdgeCases(null, sourceStringsFromStrings("a", null)));
+        assertFalse(shuffler.isValidShuffleForEdgeCases(null, sourceStringsFromStrings(null, "b")));
+        assertFalse(shuffler.isValidShuffleForEdgeCases(null, sourceStringsFromStrings("a", "b")));
     }
 
     public void testIsValidShuffleForEdgeCasesShuffledStringEmpty() {
         Shuffler shuffler = new Shuffler();
 
-        assertFalse(shuffler.isValidShuffleForEdgeCases("", null, null));
-        assertFalse(shuffler.isValidShuffleForEdgeCases("", "a", null));
-        assertFalse(shuffler.isValidShuffleForEdgeCases("", null, "xy"));
-        assertFalse(shuffler.isValidShuffleForEdgeCases("", "a", "b"));
+        assertFalse(shuffler.isValidShuffleForEdgeCases("", sourceStringsFromStrings(null, null)));
+        assertFalse(shuffler.isValidShuffleForEdgeCases("", sourceStringsFromStrings("a", null)));
+        assertFalse(shuffler.isValidShuffleForEdgeCases("", sourceStringsFromStrings(null, "xy")));
+        assertFalse(shuffler.isValidShuffleForEdgeCases("", sourceStringsFromStrings("a", "b")));
     }
 
     public void testIsValidShuffleForEdgeCasesSourceStringNull() {
         Shuffler shuffler = new Shuffler();
 
-        assertTrue(shuffler.isValidShuffleForEdgeCases("abc", "abc", null));
-        assertTrue(shuffler.isValidShuffleForEdgeCases("abc", null, "abc"));
+        assertTrue(shuffler.isValidShuffleForEdgeCases("abc", sourceStringsFromStrings("abc", null)));
+        assertTrue(shuffler.isValidShuffleForEdgeCases("abc", sourceStringsFromStrings(null, "abc")));
+        assertFalse(shuffler.isValidShuffleForEdgeCases("abc", sourceStringsFromStrings(null, null)));
 
-        assertFalse(shuffler.isValidShuffleForEdgeCases("abc", null, null));
-
-        assertNull(shuffler.isValidShuffleForEdgeCases("a", null, "ab"));
-        assertNull(shuffler.isValidShuffleForEdgeCases("ab", null, "abc"));
-        assertNull(shuffler.isValidShuffleForEdgeCases("abc", null, "ab"));
+        assertNull(shuffler.isValidShuffleForEdgeCases("a", sourceStringsFromStrings(null, "ab")));
+        assertNull(shuffler.isValidShuffleForEdgeCases("ab", sourceStringsFromStrings(null, "abc")));
+        assertNull(shuffler.isValidShuffleForEdgeCases("abc", sourceStringsFromStrings(null, "ab")));
     }
 
     public void testIsValidShuffleForEdgeCasesSourceStringEmpty() {
         Shuffler shuffler = new Shuffler();
 
-        assertTrue(shuffler.isValidShuffleForEdgeCases("", "", ""));
-        assertTrue(shuffler.isValidShuffleForEdgeCases("abc", "abc", ""));
-        assertTrue(shuffler.isValidShuffleForEdgeCases("abc", "", "abc"));
+        assertTrue(shuffler.isValidShuffleForEdgeCases("", sourceStringsFromStrings("", "")));
+        assertTrue(shuffler.isValidShuffleForEdgeCases("abc", sourceStringsFromStrings("abc", "")));
+        assertTrue(shuffler.isValidShuffleForEdgeCases("abc", sourceStringsFromStrings("", "abc")));
 
-        assertFalse(shuffler.isValidShuffleForEdgeCases("abc", "", ""));
+        assertFalse(shuffler.isValidShuffleForEdgeCases("abc", sourceStringsFromStrings("", "")));
     }
 
     //==========================================================================
@@ -75,67 +82,67 @@ public class ShufflerTest extends TestCase {
     public void testIsValidShuffleShuffledStringNull() {
         Shuffler shuffler = new Shuffler();
 
-        assertTrue(shuffler.isValidShuffle(null, null, null));
-
-        assertFalse(shuffler.isValidShuffle(null, "a", null));
-        assertFalse(shuffler.isValidShuffle(null, null, "b"));
-        assertFalse(shuffler.isValidShuffle(null, "a", "b"));
+        assertTrue(shuffler.isValidShuffle(null, sourceStringsFromStrings(null, null)));
+        assertFalse(shuffler.isValidShuffle(null, sourceStringsFromStrings("a", null)));
+        assertFalse(shuffler.isValidShuffle(null, sourceStringsFromStrings(null, "b")));
+        assertFalse(shuffler.isValidShuffle(null, sourceStringsFromStrings("a", "b")));
     }
 
     public void testIsValidShuffleShuffledStringEmpty() {
         Shuffler shuffler = new Shuffler();
 
-        assertFalse(shuffler.isValidShuffle("", null, null));
-        assertFalse(shuffler.isValidShuffle("", "a", null));
-        assertFalse(shuffler.isValidShuffle("", null, "xy"));
-        assertFalse(shuffler.isValidShuffle("", "a", "b"));
+        assertFalse(shuffler.isValidShuffle("", sourceStringsFromStrings(null, null)));
+        assertFalse(shuffler.isValidShuffle("", sourceStringsFromStrings("a", null)));
+
+        assertFalse(shuffler.isValidShuffle("", sourceStringsFromStrings(null, "xy")));
+        assertFalse(shuffler.isValidShuffle("", sourceStringsFromStrings("a", "b")));
     }
 
     public void testIsValidShuffleSourceStringNull() {
         Shuffler shuffler = new Shuffler();
 
-        assertTrue(shuffler.isValidShuffle("abc", "abc", null));
-        assertTrue(shuffler.isValidShuffle("abc", null, "abc"));
+        assertTrue(shuffler.isValidShuffle("abc", sourceStringsFromStrings("abc", null)));
+        assertTrue(shuffler.isValidShuffle("abc", sourceStringsFromStrings(null, "abc")));
 
-        assertFalse(shuffler.isValidShuffle("abc", null, null));
-        assertFalse(shuffler.isValidShuffle("abc", null, "ab"));
-        assertFalse(shuffler.isValidShuffle("a", null, "ab"));
-        assertFalse(shuffler.isValidShuffle("ab", null, "abc"));
+        assertFalse(shuffler.isValidShuffle("abc", sourceStringsFromStrings(null, null)));
+        assertFalse(shuffler.isValidShuffle("abc", sourceStringsFromStrings(null, "ab")));
+        assertFalse(shuffler.isValidShuffle("a", sourceStringsFromStrings(null, "ab")));
+        assertFalse(shuffler.isValidShuffle("ab", sourceStringsFromStrings(null, "abc")));
     }
 
     public void testIsValidShuffleSourceStringEmpty() {
         Shuffler shuffler = new Shuffler();
 
-        assertTrue(shuffler.isValidShuffle("", "", ""));
-        assertTrue(shuffler.isValidShuffle("abc", "abc", ""));
-        assertTrue(shuffler.isValidShuffle("abc", "", "abc"));
+        assertTrue(shuffler.isValidShuffle("", sourceStringsFromStrings("", "")));
+        assertTrue(shuffler.isValidShuffle("abc", sourceStringsFromStrings("abc", "")));
+        assertTrue(shuffler.isValidShuffle("abc", sourceStringsFromStrings("", "abc")));
 
-        assertFalse(shuffler.isValidShuffle("abc", "", ""));
+        assertFalse(shuffler.isValidShuffle("abc", sourceStringsFromStrings("", "")));
     }
 
     public void testIsValidShuffle() {
         Shuffler shuffler = new Shuffler();
 
-        assertTrue(shuffler.isValidShuffle("ab", "a", "b"));
-        assertTrue(shuffler.isValidShuffle("dabecf", "abc", "def"));
-        assertTrue(shuffler.isValidShuffle("abcdefghijkl", "abcghi", "defjkl"));
+        assertTrue(shuffler.isValidShuffle("ab", sourceStringsFromStrings("a", "b")));
+        assertTrue(shuffler.isValidShuffle("dabecf", sourceStringsFromStrings("abc", "def")));
+        assertTrue(shuffler.isValidShuffle("abcdefghijkl", sourceStringsFromStrings("abcghi", "defjkl")));
 
-        assertFalse(shuffler.isValidShuffle("abcdefghijkl", "abchgi", "defjkl"));
+        assertFalse(shuffler.isValidShuffle("abcdefghijkl", sourceStringsFromStrings("abchgi", "defjkl")));
     }
 
     public void testIsValidShuffleLettersInCommon() {
         Shuffler shuffler = new Shuffler();
 
-        // string0 and string1 contain letters in common
-        assertTrue(shuffler.isValidShuffle("abca", "ac", "ba"));
-        assertTrue(shuffler.isValidShuffle("acbbca", "abc", "cba"));
-        assertTrue(shuffler.isValidShuffle("abaabza", "aba", "abza"));
+        // sourceStrings 0 and 1 contain letters in common
+        assertTrue(shuffler.isValidShuffle("abca", sourceStringsFromStrings("ac", "ba")));
+        assertTrue(shuffler.isValidShuffle("acbbca", sourceStringsFromStrings("abc", "cba")));
+        assertTrue(shuffler.isValidShuffle("abaabza", sourceStringsFromStrings("aba", "abza")));
         assertTrue(shuffler.isValidShuffle("This is a great day indeed!",
-                "T reayde", "hisis a gt da ined!"));
+                sourceStringsFromStrings("T reayde", "hisis a gt da ined!")));
 
         // expect false because strings are case sensitive
         assertFalse(shuffler.isValidShuffle("This is a great day indeed!",
-                "t reayde", "hisis a gt da ined!"));
+                sourceStringsFromStrings("t reayde", "hisis a gt da ined!")));
     }
 
     public void testIsValidShuffleUTF8() {
@@ -143,10 +150,10 @@ public class ShufflerTest extends TestCase {
 
         // Chinese from http://www.foxconn.com/index.html
         assertTrue(shuffler.isValidShuffle("公告本公司董事會通過104年第一季合併",
-                "公司會0合", "告本公董事通過14年第一季併"));
+                sourceStringsFromStrings("公司會0合", "告本公董事通過14年第一季併")));
 
         assertFalse(shuffler.isValidShuffle("公告本公司董事會通過104年第一季合併",
-                "公司0合", "會告本公董事通過14年第一季併"));
+                sourceStringsFromStrings("公司0合", "會告本公董事通過14年第一季併")));
     }
 
     //==========================================================================
@@ -154,26 +161,26 @@ public class ShufflerTest extends TestCase {
     public void testIsValidShuffleDepthFirst() {
         Shuffler shuffler = new Shuffler();
 
-        assertTrue(shuffler.isValidShuffleDepthFirst("ab", "a", "b"));
-        assertTrue(shuffler.isValidShuffleDepthFirst("dabecf", "abc", "def"));
-        assertTrue(shuffler.isValidShuffleDepthFirst("abcdefghijkl", "abcghi", "defjkl"));
+        assertTrue(shuffler.isValidShuffleDepthFirst("ab", sourceStringsFromStrings("a", "b")));
+        assertTrue(shuffler.isValidShuffleDepthFirst("dabecf", sourceStringsFromStrings("abc", "def")));
+        assertTrue(shuffler.isValidShuffleDepthFirst("abcdefghijkl", sourceStringsFromStrings("abcghi", "defjkl")));
 
-        assertFalse(shuffler.isValidShuffleDepthFirst("abcdefghijkl", "abchgi", "defjkl"));
+        assertFalse(shuffler.isValidShuffleDepthFirst("abcdefghijkl", sourceStringsFromStrings("abchgi", "defjkl")));
     }
 
     public void testIsValidShuffleDepthFirstLettersInCommon() {
         Shuffler shuffler = new Shuffler();
 
-        // string0 and string1 contain letters in common
-        assertTrue(shuffler.isValidShuffleDepthFirst("abca", "ac", "ba"));
-        assertTrue(shuffler.isValidShuffleDepthFirst("acbbca", "abc", "cba"));
-        assertTrue(shuffler.isValidShuffleDepthFirst("abaabza", "aba", "abza"));
+        // sourceStrings 0 and 1 contain letters in common
+        assertTrue(shuffler.isValidShuffleDepthFirst("abca", sourceStringsFromStrings("ac", "ba")));
+        assertTrue(shuffler.isValidShuffleDepthFirst("acbbca", sourceStringsFromStrings("abc", "cba")));
+        assertTrue(shuffler.isValidShuffleDepthFirst("abaabza", sourceStringsFromStrings("aba", "abza")));
         assertTrue(shuffler.isValidShuffleDepthFirst("This is a great day indeed!",
-                "T reayde", "hisis a gt da ined!"));
+                sourceStringsFromStrings("T reayde", "hisis a gt da ined!")));
 
         // expect false because strings are case sensitive
         assertFalse(shuffler.isValidShuffleDepthFirst("This is a great day indeed!",
-                "t reayde", "hisis a gt da ined!"));
+                sourceStringsFromStrings("t reayde", "hisis a gt da ined!")));
     }
 
     public void testIsValidShuffleDepthFirstUTF8() {
@@ -181,9 +188,10 @@ public class ShufflerTest extends TestCase {
 
         // Chinese from http://www.foxconn.com/index.html
         assertTrue(shuffler.isValidShuffleDepthFirst("公告本公司董事會通過104年第一季合併",
-                "公司會0合", "告本公董事通過14年第一季併"));
+                sourceStringsFromStrings("公司會0合", "告本公董事通過14年第一季併")));
 
         assertFalse(shuffler.isValidShuffleDepthFirst("公告本公司董事會通過104年第一季合併",
-                "公司0合", "會告本公董事通過14年第一季併"));
+                sourceStringsFromStrings("公司0合", "會告本公董事通過14年第一季併")));
     }
+
 }
