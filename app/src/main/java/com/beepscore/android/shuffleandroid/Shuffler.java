@@ -344,7 +344,11 @@ public class Shuffler {
         stack.push(root);
     }
 
+    // TODO: replace with something like addChildNodeAtIndexToNodeAndStack
     // TODO: only push if valid
+    // This way the stack would only contain possibly good nodes.
+    // As soon as we determine a node isn't valid, pop it from stack.
+
     private void addLeftNodeToNodeAndStack(String string0, Deque<NodeExtended> stack, NodeExtended node) {
         if ((string0 != null)
                 && (node.indexes.get(0) < string0.length())) {
