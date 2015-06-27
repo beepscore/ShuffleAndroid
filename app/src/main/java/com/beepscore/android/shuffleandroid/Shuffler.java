@@ -11,7 +11,8 @@ import java.util.Deque;
  */
 public class Shuffler {
 
-    /** Use more general interface List instead of restricting to type ArrayList
+    /**
+     * Use more general interface List instead of restricting to type ArrayList
      * http://stackoverflow.com/questions/2279030/type-list-vs-type-arraylist-in-java#2279059
      */
     public List<String> nodesSearched = null;
@@ -33,13 +34,14 @@ public class Shuffler {
     /**
      * Checks several edge cases such as arguments null or empty strings
      * Uses Boolean (true, false, null) instead of boolean (true, false)
+     *
      * @param shuffledString
-     * @param sourceStrings an array. Count == 2.
+     * @param sourceStrings  an array. Count == 2.
      * @return true if shuffledString is a valid shuffle of source strings.
      * return false if shuffledString is not a valid shuffle of source strings.
      * return null if method can't tell if shuffledString is a valid shuffle of source strings.
      */
-    protected Boolean isValidShuffleForEdgeCases(String shuffledString, ArrayList<String>sourceStrings) {
+    protected Boolean isValidShuffleForEdgeCases(String shuffledString, ArrayList<String> sourceStrings) {
 
         if (shuffledString == null) {
             if ((sourceStrings.get(0) == null) && (sourceStrings.get(1) == null)) {
@@ -98,13 +100,12 @@ public class Shuffler {
     }
 
     /**
-     *
-     * @param node may not be null.
+     * @param node          may not be null.
      * @param sourceStrings Each element may be null or empty "".
      * @return true if node indexes.get(0) and indexes.get(1) are at end of
      * sourceString.get(0) and sourceString.get(1)
      */
-    protected boolean isLeafNode(Node node, ArrayList<String>sourceStrings) {
+    protected boolean isLeafNode(Node node, ArrayList<String> sourceStrings) {
 
         if (StringUtils.isStringNullOrEmpty(sourceStrings.get(0))
                 && StringUtils.isStringNullOrEmpty(sourceStrings.get(1))) {
@@ -137,7 +138,7 @@ public class Shuffler {
         }
     }
 
-    protected boolean isASolution(Node node, String shuffledString, ArrayList<String>sourceStrings) {
+    protected boolean isASolution(Node node, String shuffledString, ArrayList<String> sourceStrings) {
         if (isLeafNode(node, sourceStrings)
                 && isNodeValueEqualToValue(node, shuffledString)) {
             return true;
@@ -151,12 +152,13 @@ public class Shuffler {
     /**
      * Traverses binary tree breadth first.
      * Uses a queue instead of recursion to reduce risk of call stack overflow.
+     *
      * @param shuffledString a potential shuffle of source strings
-     * @param sourceStrings an array of source strings. Currently assumes count = 2
+     * @param sourceStrings  an array of source strings. Currently assumes count = 2
      * @return true if shuffledString is a valid shuffle of source strings.
      */
     public boolean isValidShuffle(String shuffledString,
-                                  ArrayList<String>sourceStrings) {
+                                  ArrayList<String> sourceStrings) {
 
         Boolean edgeCaseResult = isValidShuffleForEdgeCases(shuffledString, sourceStrings);
         if (edgeCaseResult != null) {
@@ -204,7 +206,7 @@ public class Shuffler {
         // index values signifies node has no letters from that source string
         // e.g. if node.indexes.get(0) == -1, node.value contains no letters from string0
         final Integer INDEX_BEFORE_SOURCE_START = -1;
-        ArrayList<Integer>indexesBeforeSourceStart = new ArrayList<Integer>();
+        ArrayList<Integer> indexesBeforeSourceStart = new ArrayList<Integer>();
         indexesBeforeSourceStart.add(INDEX_BEFORE_SOURCE_START);
         indexesBeforeSourceStart.add(INDEX_BEFORE_SOURCE_START);
 
@@ -215,11 +217,11 @@ public class Shuffler {
 
     /**
      * @param sourceStrings
-     * @param childIndex 0 to add left child, 1 to add right child
+     * @param childIndex    0 to add left child, 1 to add right child
      * @param queue
-     * @param node Node that child node will be added to
+     * @param node          Node that child node will be added to
      */
-    private void addChildNodeAtIndexToNodeAndQueue(ArrayList<String>sourceStrings,
+    private void addChildNodeAtIndexToNodeAndQueue(ArrayList<String> sourceStrings,
                                                    Integer childIndex,
                                                    Node node, Queue<Node> queue) {
         Integer otherChildIndex = 0;
@@ -233,18 +235,17 @@ public class Shuffler {
                     node.indexes.get(childIndex) + 1);
             String childNodeValue = node.value.concat(childStringAtIndex);
 
-            ArrayList<Integer>childNodeIndexes = new ArrayList<Integer>();
+            ArrayList<Integer> childNodeIndexes = new ArrayList<Integer>();
             if (childIndex == 0) {
                 childNodeIndexes.add(node.indexes.get(childIndex) + 1);
                 childNodeIndexes.add(node.indexes.get(otherChildIndex));
-            }
-            else {
+            } else {
                 childNodeIndexes.add(node.indexes.get(otherChildIndex));
                 childNodeIndexes.add(node.indexes.get(childIndex) + 1);
             }
 
             Node childNode = new Node(childNodeValue, childNodeIndexes, null);
-            ((ArrayList<Node>)node.children).set(childIndex, childNode);
+            ((ArrayList<Node>) node.children).set(childIndex, childNode);
             queue.add(childNode);
         }
     }
@@ -254,13 +255,14 @@ public class Shuffler {
     /**
      * Traverses binary tree depth first.
      * Uses a stack instead of recursion to reduce risk of call stack overflow.
+     *
      * @param shuffledString a potential shuffle of string0 and string1
-     * @param sourceStrings an array of source strings. Currently assumes count = 2
+     * @param sourceStrings  an array of source strings. Currently assumes count = 2
      * @return true if shuffledString is a valid shuffle of source strings
      * http://www.cis.upenn.edu/~matuszek/cit594-2012/Pages/backtracking.html
      */
     public boolean isValidShuffleDepthFirst(String shuffledString,
-                                            ArrayList<String>sourceStrings) {
+                                            ArrayList<String> sourceStrings) {
 
         Boolean edgeCaseResult = isValidShuffleForEdgeCases(shuffledString, sourceStrings);
         if (edgeCaseResult != null) {
@@ -302,22 +304,18 @@ public class Shuffler {
                     stack.pop();
                     continue;
                 }
-            }
-
-            else {
+            } else {
                 if (node.didVisitAllChildren()) {
                     // didn't find a solution under this node
                     stack.pop();
                     continue;
-                }
-                else {
+                } else {
                     if (!node.didVisitLeft) {
                         node.didVisitLeft = true;
-                        addLeftNodeToNodeAndStack(sourceStrings.get(0), stack, node);
-                    }
-                    else if (!node.didVisitRight) {
+                        addChildNodeAtIndexToNodeAndStack(sourceStrings, 0, node, stack);
+                    } else if (!node.didVisitRight) {
                         node.didVisitRight = true;
-                        addRightNodeToNodeAndStack(sourceStrings.get(1), stack, node);
+                        addChildNodeAtIndexToNodeAndStack(sourceStrings, 1, node, stack);
                     }
                 }
             }
@@ -330,7 +328,7 @@ public class Shuffler {
         // this index value signifies node has no letters from that source
         // e.g. if node.indexes.get(0) == -1, node.value contains no letters from string0
         final Integer INDEX_BEFORE_SOURCE_START = -1;
-        ArrayList<Integer>indexesBeforeSourceStart = new ArrayList<Integer>();
+        ArrayList<Integer> indexesBeforeSourceStart = new ArrayList<Integer>();
         indexesBeforeSourceStart.add(INDEX_BEFORE_SOURCE_START);
         indexesBeforeSourceStart.add(INDEX_BEFORE_SOURCE_START);
 
@@ -344,43 +342,35 @@ public class Shuffler {
         stack.push(root);
     }
 
-    // TODO: replace with something like addChildNodeAtIndexToNodeAndStack
     // TODO: only push if valid
     // This way the stack would only contain possibly good nodes.
     // As soon as we determine a node isn't valid, pop it from stack.
-
-    private void addLeftNodeToNodeAndStack(String string0, Deque<NodeExtended> stack, NodeExtended node) {
-        if ((string0 != null)
-                && (node.indexes.get(0) < string0.length())) {
-            String string0AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string0, node.indexes.get(0) + 1);
-            String leftNodeValue = node.value.concat(string0AtIndex);
-
-            ArrayList<Integer>indexes = new ArrayList<Integer>();
-            indexes.add(node.indexes.get(0) + 1);
-            indexes.add(node.indexes.get(1));
-
-            NodeExtended leftNode = new NodeExtended(leftNodeValue, indexes,
-                    null, false, false);
-            ((ArrayList<NodeExtended>)node.children).set(0, leftNode);
-            stack.push(leftNode);
+    private void addChildNodeAtIndexToNodeAndStack(ArrayList<String> sourceStrings,
+                                                   Integer childIndex,
+                                                   NodeExtended node, Deque<NodeExtended> stack) {
+        Integer otherChildIndex = 0;
+        if (childIndex == 0) {
+            otherChildIndex = 1;
         }
-    }
 
-    // TODO: only push if valid
-    private void addRightNodeToNodeAndStack(String string1, Deque<NodeExtended> stack, NodeExtended node) {
-        if ((string1 != null)
-                && (node.indexes.get(1) < string1.length())) {
-            String string1AtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(string1, node.indexes.get(1) + 1);
-            String rightNodeValue = node.value.concat(string1AtIndex);
+        if ((sourceStrings.get(childIndex) != null)
+                && (node.indexes.get(childIndex) < sourceStrings.get(childIndex).length())) {
+            String childStringAtIndex = StringUtils.getSafeSubstringLengthOneAtIndex(sourceStrings.get(childIndex),
+                    node.indexes.get(childIndex) + 1);
+            String childNodeValue = node.value.concat(childStringAtIndex);
 
-            ArrayList<Integer>indexes = new ArrayList<Integer>();
-            indexes.add(node.indexes.get(0));
-            indexes.add(node.indexes.get(1) + 1);
+            ArrayList<Integer> childNodeIndexes = new ArrayList<Integer>();
+            if (childIndex == 0) {
+                childNodeIndexes.add(node.indexes.get(childIndex) + 1);
+                childNodeIndexes.add(node.indexes.get(otherChildIndex));
+            } else {
+                childNodeIndexes.add(node.indexes.get(otherChildIndex));
+                childNodeIndexes.add(node.indexes.get(childIndex) + 1);
+            }
 
-            NodeExtended rightNode = new NodeExtended(rightNodeValue, indexes,
-                    null, false, false);
-            ((ArrayList<NodeExtended>)node.children).set(1, rightNode);
-            stack.push(rightNode);
+            NodeExtended childNode = new NodeExtended(childNodeValue, childNodeIndexes, null, false, false);
+            ((ArrayList<Node>) node.children).set(childIndex, childNode);
+            stack.push(childNode);
         }
     }
 
