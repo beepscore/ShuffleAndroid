@@ -369,7 +369,7 @@ public class Shuffler {
             }
 
             NodeExtended childNode = new NodeExtended(childNodeValue, childNodeIndexes, null, false, false);
-            ((ArrayList<Node>) node.children).set(childIndex, childNode);
+            ((ArrayList<NodeExtended>) node.children).set(childIndex, childNode);
             stack.push(childNode);
         }
     }
