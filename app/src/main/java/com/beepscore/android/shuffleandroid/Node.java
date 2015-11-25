@@ -1,7 +1,6 @@
 package com.beepscore.android.shuffleandroid;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by stevebaker on 6/12/15.
