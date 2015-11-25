@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 /**
  * Created by stevebaker on 6/12/15.
- *
- * Provides a node that can be used to build a tree
- *
+ */
+
+/**
+ * Provides a node that can be used to build a tree data structure.
  */
 public class Node {
 

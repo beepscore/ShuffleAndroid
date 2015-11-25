@@ -8,13 +8,15 @@ package com.beepscore.android.shuffleandroid;
  */
 public class StringUtils {
 
-    /** "Safe" means method avoids null pointer exception and out of bounds exception
+    /**
+     * "Safe" means method avoids null pointer exception and out of bounds exception
+     *
      * Unlike standard string.substring(), range from startIndex to endIndex is inclusive.
      * @param aString
      * @param endIndex may be in middle, at end, or past end of aString.
      * @param startIndex
      * @return substring from startIndex to endIndex inclusive.
-     *                 if endIndex >= aString.length return substring to endIndex
+     * return substring to endIndex if endIndex >= aString.length()
      */
     protected static String getSafeSubstringInclusive(String aString,
                                                       int startIndex, int endIndex) {
@@ -36,7 +38,9 @@ public class StringUtils {
         }
     }
 
-    /** "Safe" means method avoids null pointer exception and out of bounds exception
+    /**
+     * "Safe" means method avoids null pointer exception and out of bounds exception
+     *
      * @param aString
      * @param index
      * @return substring of length one at index.
