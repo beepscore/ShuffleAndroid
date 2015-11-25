@@ -4,13 +4,45 @@ import java.util.ArrayList;
 
 /**
  * Created by stevebaker on 6/12/15.
+ *
+ * Provides a node that can be used to build a tree
+ *
  */
 public class Node {
 
+    /**
+     * A value
+     * When nodes are connected in a tree, we may search the tree to look for a value.
+     * We may sort or order the nodes in the tree based on each node's value.
+     * For example sort the nodes into a binary search tree or into a heap.
+     * https://en.wikipedia.org/wiki/Binary_tree
+     * https://en.wikipedia.org/wiki/Binary_heap
+     * https://en.wikipedia.org/wiki/Binary_search_tree
+     */
     String value = null;
+
+    /**
+     * An array of indexes
+     * For example, when shuffling 2 strings,
+     * index(0) can represent the current position within string0
+     * index(1) can represent the current position within string1
+     */
     ArrayList<Integer> indexes = null;
+
+    /**
+     * An array of this node's children
+     * For example, when building a binary tree, children.size() can be 2
+     * child(0) can reference the left child, or can be null
+     * child(1) can reference the right child, or can be null
+     */
     ArrayList<? extends Node> children = null;
 
+    /**
+     *
+     * @param value
+     * @param indexes
+     * @param children
+     */
     public Node(String value, ArrayList<Integer> indexes,
                 ArrayList<? extends Node> children) {
 

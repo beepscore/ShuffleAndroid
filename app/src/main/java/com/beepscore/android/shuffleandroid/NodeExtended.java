@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 /**
  * Created by stevebaker on 6/24/15.
+ *
+ * NodeExtended adds properties to help traverse a tree of nodes
+ * by remembering which children have been visited.
+ *
  */
 public class NodeExtended extends Node {
 

@@ -2,10 +2,13 @@ package com.beepscore.android.shuffleandroid;
 
 /**
  * Created by stevebaker on 6/12/15.
+ *
+ * Provides String utility methods such as safely getting a substring.
+ * "Safe" means method avoids null pointer exception and out of bounds exception
  */
 public class StringUtils {
 
-    /** Method is "safe" in that it avoids out of bounds exceptions
+    /** "Safe" means method avoids null pointer exception and out of bounds exception
      * Unlike standard string.substring(), range from startIndex to endIndex is inclusive.
      * @param aString
      * @param endIndex may be in middle, at end, or past end of aString.
@@ -33,7 +36,7 @@ public class StringUtils {
         }
     }
 
-    /** Method is "safe" in that it avoids out of bounds exceptions
+    /** "Safe" means method avoids null pointer exception and out of bounds exception
      * @param aString
      * @param index
      * @return substring of length one at index.
