@@ -76,7 +76,9 @@ public class Node {
     @Override
     public String toString() {
         String description =  valueDescription(value) + ", "
-                + indexesDescription(indexes) + ", "
+                + indexesDescription(indexes)
+                + ","
+                + System.lineSeparator()
                 + childrenDescription(children);
         return description;
     }

@@ -22,7 +22,9 @@ public class NodeTest extends TestCase {
 
     public void testNodeToStringPropertiesNull() {
         Node node = new Node();
-        String expected = "null, indexes: [null, null], children: [null, null]";
+        String expected = "null, indexes: [null, null],"
+                + System.lineSeparator()
+                + "children: [null, null]";
         assertEquals(expected, node.toString());
     }
 
@@ -33,7 +35,9 @@ public class NodeTest extends TestCase {
         joe.value = testValue;
         assertEquals(testValue, joe.value);
 
-        String expectedDescription = "Joe, indexes: [null, null], children: [null, null]";
+        String expectedDescription = "Joe, indexes: [null, null],"
+                + System.lineSeparator()
+                + "children: [null, null]";
         assertEquals(expectedDescription, joe.toString());
 
         Node larry = new Node();
@@ -41,18 +45,24 @@ public class NodeTest extends TestCase {
         larry.value = "Larry";
         assertEquals(larry, joe.children.get(0));
 
-        expectedDescription = "Joe, indexes: [null, null], children: [Larry, null]";
+        expectedDescription = "Joe, indexes: [null, null],"
+                + System.lineSeparator()
+                + "children: [Larry, null]";
         assertEquals(expectedDescription, joe.toString());
 
         Node rick = new Node();
         ((ArrayList<Node>)joe.children).set(1, rick);
         assertEquals(rick, joe.children.get(1));
 
-        expectedDescription = "Joe, indexes: [null, null], children: [Larry, null]";
+        expectedDescription = "Joe, indexes: [null, null],"
+                + System.lineSeparator()
+                + "children: [Larry, null]";
         assertEquals(expectedDescription, joe.toString());
 
         rick.value = "Rick";
-        expectedDescription = "Joe, indexes: [null, null], children: [Larry, Rick]";
+        expectedDescription = "Joe, indexes: [null, null],"
+                + System.lineSeparator()
+                + "children: [Larry, Rick]";
         assertEquals(expectedDescription, joe.toString());
     }
 
