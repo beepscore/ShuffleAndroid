@@ -1,5 +1,10 @@
 package com.beepscore.android.shuffleandroid;
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -11,6 +16,8 @@ import java.util.ArrayList;
  * by remembering which children have been visited.
  */
 public class NodeExtended extends Node {
+
+    public final String LOG_TAG = NodeExtended.class.getSimpleName();
 
     Boolean didVisitLeft = null;
     Boolean didVisitRight = null;
@@ -42,33 +49,23 @@ public class NodeExtended extends Node {
 
     @Override
     public String toString() {
-        String description =  super.toString()
-                + ","
-                + System.lineSeparator()
-                + didVisitLeftDescription(didVisitLeft)
-                + ", "
-                + didVisitRightDescription(didVisitRight);
-        return description;
+        return this.descriptionJSON().toString();
     }
 
     protected String didVisitLeftDescription(Boolean didVisitLeft) {
-        String description = "didVisitLeft:";
         if (didVisitLeft == null) {
-            description = description.concat("null");
+            return "null";
         } else {
-            description = description.concat(didVisitLeft.toString());
+            return this.didVisitLeft.toString();
         }
-        return description;
     }
 
     protected String didVisitRightDescription(Boolean didVisitRight) {
-        String description = "didVisitRight:";
         if (didVisitRight == null) {
-            description = description.concat("null");
+            return "null";
         } else {
-            description = description.concat(didVisitRight.toString());
+            return this.didVisitRight.toString();
         }
-        return description;
     }
 
     public Boolean didVisitAllChildren() {
@@ -77,6 +74,21 @@ public class NodeExtended extends Node {
         } else {
             return false;
         }
+    }
+
+    /**
+     * @return a partial description of the node
+     */
+    protected JSONObject descriptionJSON() {
+
+        JSONObject description = super.descriptionJSON();
+        try {
+            description.put("didVisitLeft", this.didVisitLeftDescription(this.didVisitLeft));
+            description.put("didVisitRight", this.didVisitRightDescription(this.didVisitRight));
+        } catch (JSONException e) {
+            Log.d(LOG_TAG, "descriptionJSON error" + e.toString());
+        }
+        return description;
     }
 
 }
