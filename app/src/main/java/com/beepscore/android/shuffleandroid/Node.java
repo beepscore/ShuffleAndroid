@@ -156,7 +156,7 @@ public class Node {
 
         JSONObject description = new JSONObject();
         try {
-            description.put("value", this.value);
+            description.put("value", this.valueDescription(this.value));
             description.put("indexes", this.indexesDescription(this.indexes));
             description.put("children", this.childrenDescription(this.children));
         } catch (JSONException e) {
