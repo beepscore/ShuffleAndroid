@@ -51,7 +51,7 @@ public class NodeExtended extends Node {
     }
 
     protected String didVisitLeftDescription(Boolean didVisitLeft) {
-        String description = "";
+        String description = "didVisitLeft:";
         if (didVisitLeft == null) {
             description = description.concat("null");
         } else {
@@ -61,7 +61,7 @@ public class NodeExtended extends Node {
     }
 
     protected String didVisitRightDescription(Boolean didVisitRight) {
-        String description = "";
+        String description = "didVisitRight:";
         if (didVisitRight == null) {
             description = description.concat("null");
         } else {
