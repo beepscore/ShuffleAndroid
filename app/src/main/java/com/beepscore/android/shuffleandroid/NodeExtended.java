@@ -43,7 +43,8 @@ public class NodeExtended extends Node {
     @Override
     public String toString() {
         String description =  super.toString()
-                + ", "
+                + ","
+                + System.lineSeparator()
                 + didVisitLeftDescription(didVisitLeft)
                 + ", "
                 + didVisitRightDescription(didVisitRight);
