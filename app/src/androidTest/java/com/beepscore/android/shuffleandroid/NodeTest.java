@@ -1,6 +1,10 @@
 package com.beepscore.android.shuffleandroid;
 
+import android.util.Log;
+
 import junit.framework.TestCase;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -8,6 +12,8 @@ import java.util.ArrayList;
  * Created by stevebaker on 6/12/15.
  */
 public class NodeTest extends TestCase {
+
+    public final String LOG_TAG = NodeTest.class.getSimpleName();
 
     public void testNodePropertiesNull() {
         Node node = new Node();
@@ -22,9 +28,7 @@ public class NodeTest extends TestCase {
 
     public void testNodeToStringPropertiesNull() {
         Node node = new Node();
-        String expected = "null, indexes: [null, null],"
-                + System.lineSeparator()
-                + "children: [null, null]";
+        String expected = "{\"indexes\":\"[null, null]\",\"children\":\"[null, null]\"}";
         assertEquals(expected, node.toString());
     }
 
@@ -35,9 +39,7 @@ public class NodeTest extends TestCase {
         joe.value = testValue;
         assertEquals(testValue, joe.value);
 
-        String expectedDescription = "Joe, indexes: [null, null],"
-                + System.lineSeparator()
-                + "children: [null, null]";
+        String expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[null, null]\"}";
         assertEquals(expectedDescription, joe.toString());
 
         Node larry = new Node();
@@ -45,24 +47,18 @@ public class NodeTest extends TestCase {
         larry.value = "Larry";
         assertEquals(larry, joe.children.get(0));
 
-        expectedDescription = "Joe, indexes: [null, null],"
-                + System.lineSeparator()
-                + "children: [Larry, null]";
+        expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, null]\"}";
         assertEquals(expectedDescription, joe.toString());
 
         Node rick = new Node();
         ((ArrayList<Node>)joe.children).set(1, rick);
         assertEquals(rick, joe.children.get(1));
 
-        expectedDescription = "Joe, indexes: [null, null],"
-                + System.lineSeparator()
-                + "children: [Larry, null]";
+        expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, null]\"}";
         assertEquals(expectedDescription, joe.toString());
 
         rick.value = "Rick";
-        expectedDescription = "Joe, indexes: [null, null],"
-                + System.lineSeparator()
-                + "children: [Larry, Rick]";
+        expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, Rick]\"}";
         assertEquals(expectedDescription, joe.toString());
     }
 
@@ -79,5 +75,21 @@ public class NodeTest extends TestCase {
         assertEquals(value, joe.value);
         assertEquals(larry, joe.children.get(0));
         assertEquals(rick, joe.children.get(1));
+    }
+
+    public void testToString() {
+        Node larry = new Node();
+        larry.value = "Larry";
+        Node rick = new Node();
+        rick.value = "Rick";
+        ArrayList<Node> children = new ArrayList<Node>();
+        children.add(larry);
+        children.add(rick);
+        Node joe = new Node("Joe", null, children);
+
+        Log.d(LOG_TAG, joe.toString());
+
+        String expected = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, Rick]\"}";
+        assertEquals(expected, joe.toString());
     }
 }

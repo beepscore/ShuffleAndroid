@@ -1,5 +1,10 @@
 package com.beepscore.android.shuffleandroid;
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -10,6 +15,8 @@ import java.util.ArrayList;
  * Provides a node that can be used to build a tree data structure.
  */
 public class Node {
+
+    public final String LOG_TAG = Node.class.getSimpleName();
 
     /**
      * A value
@@ -75,36 +82,27 @@ public class Node {
 
     @Override
     public String toString() {
-        String description =  valueDescription(value) + ", "
-                + indexesDescription(indexes)
-                + ","
-                + System.lineSeparator()
-                + childrenDescription(children);
-        return description;
+        return this.descriptionJSON().toString();
     }
 
     protected String valueDescription(String aValue) {
-        String description = "";
         if (aValue == null) {
-            description = description.concat("null");
+            return "null";
         } else {
-            description = description.concat(aValue);
+            return aValue;
         }
-        return description;
     }
 
     protected String indexesDescription(ArrayList<Integer> indexes) {
-        String description = "indexes: ";
         if (indexes == null) {
-            description = description.concat("null");
+            return "null";
         } else {
-            description = description.concat(indexes.toString());
+            return indexes.toString();
         }
-        return description;
     }
 
     protected String childrenDescription(ArrayList<? extends Node> children) {
-        String description = "children: ";
+        String description = "";
         if (children == null) {
             description = description.concat("null");
         } else {
@@ -147,6 +145,22 @@ public class Node {
             } else {
                 description = description.concat(child.value);
             }
+        }
+        return description;
+    }
+
+    /**
+     * @return a partial description of the node
+     */
+    protected JSONObject descriptionJSON() {
+
+        JSONObject description = new JSONObject();
+        try {
+            description.put("value", this.value);
+            description.put("indexes", this.indexesDescription(this.indexes));
+            description.put("children", this.childrenDescription(this.children));
+        } catch (JSONException e) {
+            Log.d(LOG_TAG, "descriptionJSON error" + e.toString());
         }
         return description;
     }
