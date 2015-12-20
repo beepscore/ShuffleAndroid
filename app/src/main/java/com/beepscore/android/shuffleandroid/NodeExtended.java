@@ -52,22 +52,6 @@ public class NodeExtended extends Node {
         return this.descriptionJSON().toString();
     }
 
-    protected String didVisitLeftDescription(Boolean didVisitLeft) {
-        if (didVisitLeft == null) {
-            return "null";
-        } else {
-            return this.didVisitLeft.toString();
-        }
-    }
-
-    protected String didVisitRightDescription(Boolean didVisitRight) {
-        if (didVisitRight == null) {
-            return "null";
-        } else {
-            return this.didVisitRight.toString();
-        }
-    }
-
     public Boolean didVisitAllChildren() {
         if (didVisitLeft && didVisitRight) {
             return true;
