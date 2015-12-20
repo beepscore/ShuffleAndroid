@@ -85,14 +85,6 @@ public class Node {
         return this.descriptionJSON().toString();
     }
 
-    protected String valueDescription(String aValue) {
-        if (aValue == null) {
-            return "null";
-        } else {
-            return aValue;
-        }
-    }
-
     protected String indexesDescription(ArrayList<Integer> indexes) {
         if (indexes == null) {
             return "null";
@@ -150,18 +142,35 @@ public class Node {
     }
 
     /**
+     * If a field is null, inserts JSONObject.NULL
      * @return a partial description of the node
      */
     protected JSONObject descriptionJSON() {
 
         JSONObject description = new JSONObject();
         try {
-            description.put("value", this.valueDescription(this.value));
-            description.put("indexes", this.indexesDescription(this.indexes));
-            description.put("children", this.childrenDescription(this.children));
+            if (null == this.value) {
+                description.put("value", JSONObject.NULL);
+            } else {
+                description.put("value", this.value);
+            }
+
+            if (null == this.indexes) {
+                description.put("indexes", JSONObject.NULL);
+            } else {
+                description.put("indexes", this.indexes);
+            }
+
+            if (null == this.children) {
+                description.put("children", JSONObject.NULL);
+            } else {
+                description.put("children", this.childrenDescription(this.children));
+            }
+
         } catch (JSONException e) {
             Log.d(LOG_TAG, "descriptionJSON error" + e.toString());
         }
         return description;
     }
+
 }

@@ -28,7 +28,7 @@ public class NodeExtendedTest extends TestCase {
 
     public void testNodeExtendedToStringPropertiesNull() {
         NodeExtended node = new NodeExtended();
-        String expected = "{\"value\":\"null\",\"indexes\":\"[null, null]\",\"children\":\"[null, null]\",\"didVisitLeft\":\"null\",\"didVisitRight\":\"null\"}";
+        String expected = "{\"value\":null,\"indexes\":\"[null, null]\",\"children\":\"[null, null]\",\"didVisitLeft\":\"null\",\"didVisitRight\":\"null\"}";
         assertEquals(expected, node.toString());
     }
 
