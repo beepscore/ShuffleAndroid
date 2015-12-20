@@ -83,8 +83,19 @@ public class NodeExtended extends Node {
 
         JSONObject description = super.descriptionJSON();
         try {
-            description.put("didVisitLeft", this.didVisitLeftDescription(this.didVisitLeft));
-            description.put("didVisitRight", this.didVisitRightDescription(this.didVisitRight));
+
+            if (null == this.didVisitLeft) {
+                description.put("didVisitLeft", JSONObject.NULL);
+            } else {
+                description.put("didVisitLeft", this.didVisitLeft);
+            }
+
+            if (null == this.didVisitRight) {
+                description.put("didVisitRight", JSONObject.NULL);
+            } else {
+                description.put("didVisitRight", this.didVisitRight);
+            }
+
         } catch (JSONException e) {
             Log.d(LOG_TAG, "descriptionJSON error" + e.toString());
         }

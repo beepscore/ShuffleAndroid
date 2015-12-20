@@ -28,7 +28,7 @@ public class NodeExtendedTest extends TestCase {
 
     public void testNodeExtendedToStringPropertiesNull() {
         NodeExtended node = new NodeExtended();
-        String expected = "{\"value\":null,\"indexes\":\"[null, null]\",\"children\":\"[null, null]\",\"didVisitLeft\":\"null\",\"didVisitRight\":\"null\"}";
+        String expected = "{\"value\":null,\"indexes\":\"[null, null]\",\"children\":\"[null, null]\",\"didVisitLeft\":null,\"didVisitRight\":null}";
         assertEquals(expected, node.toString());
     }
 
@@ -39,7 +39,7 @@ public class NodeExtendedTest extends TestCase {
         joe.value = testValue;
         assertEquals(testValue, joe.value);
 
-        String expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[null, null]\",\"didVisitLeft\":\"null\",\"didVisitRight\":\"null\"}";
+        String expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[null, null]\",\"didVisitLeft\":null,\"didVisitRight\":null}";
         assertEquals(expectedDescription, joe.toString());
 
         NodeExtended larry = new NodeExtended();
@@ -47,26 +47,26 @@ public class NodeExtendedTest extends TestCase {
         larry.value = "Larry";
         assertEquals(larry, joe.children.get(0));
 
-        expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, null]\",\"didVisitLeft\":\"null\",\"didVisitRight\":\"null\"}";
+        expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, null]\",\"didVisitLeft\":null,\"didVisitRight\":null}";
         assertEquals(expectedDescription, joe.toString());
 
         NodeExtended rick = new NodeExtended();
         ((ArrayList<NodeExtended>)joe.children).set(1, rick);
         assertEquals(rick, joe.children.get(1));
 
-        expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, null]\",\"didVisitLeft\":\"null\",\"didVisitRight\":\"null\"}";
+        expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, null]\",\"didVisitLeft\":null,\"didVisitRight\":null}";
         assertEquals(expectedDescription, joe.toString());
 
         rick.value = "Rick";
-        expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, Rick]\",\"didVisitLeft\":\"null\",\"didVisitRight\":\"null\"}";
+        expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, Rick]\",\"didVisitLeft\":null,\"didVisitRight\":null}";
         assertEquals(expectedDescription, joe.toString());
 
         joe.didVisitLeft = true;
-        expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, Rick]\",\"didVisitLeft\":\"true\",\"didVisitRight\":\"null\"}";
+        expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, Rick]\",\"didVisitLeft\":true,\"didVisitRight\":null}";
         assertEquals(expectedDescription, joe.toString());
 
         joe.didVisitRight = false;
-        expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, Rick]\",\"didVisitLeft\":\"true\",\"didVisitRight\":\"false\"}";
+        expectedDescription = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, Rick]\",\"didVisitLeft\":true,\"didVisitRight\":false}";
         assertEquals(expectedDescription, joe.toString());
     }
 
