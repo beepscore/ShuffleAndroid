@@ -91,5 +91,12 @@ public class NodeTest extends TestCase {
 
         String expected = "{\"value\":\"Joe\",\"indexes\":\"[null, null]\",\"children\":\"[Larry, Rick]\"}";
         assertEquals(expected, joe.toString());
+
+        ArrayList<Integer> indexes = new ArrayList<Integer>();
+        indexes.add(6);
+        indexes.add(3);
+        joe.indexes = indexes;
+        expected = "{\"value\":\"Joe\",\"indexes\":\"[6, 3]\",\"children\":\"[Larry, Rick]\"}";
+        assertEquals(expected, joe.toString());
     }
 }
